@@ -1,27 +1,26 @@
 [
     {
-        "class": "6A",
-        "GVCN": "John Doe",
-        "students": []
+        "khoi": 8,
+        "lop": "8B",
+        "gvcn": "Ti\u00e1\u00ba\u00bfn",
+        "gvbm": {
+            "khtn": "Meo",
+            "anh": "Dog",
+            "van": "OE",
+            "toan": "UK"
+        },
+        "students": ""
     },
     {
-        "class": "7B",
-        "GVCN": "Jane Smith",
-        "students": []
-    },
-    {
-        "class": "8C",
-        "GVCN": "Alice Johnson",
-        "students": []
-    },
-    {
-        "class": "9D",
-        "GVCN": "Bob Brown",
-        "students": []
-    },
-    {
-        "name": "6B",
-        "teacher": "Mr. Hien",
-        "students": []
+        "khoi": 7,
+        "lop": "7A",
+        "gvcn": "L",
+        "gvbm": {
+            "khtn": "A",
+            "anh": "D",
+            "van": "C",
+            "toan": "T"
+        },
+        "students": ""
     }
 ]

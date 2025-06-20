@@ -125,7 +125,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
      </layout>
     </widget>
    </widget>
-   <widget class="QListWidget" name="listWidget">
+   <widget class="QListWidget" name="danhsachGV">
     <property name="geometry">
      <rect>
       <x>150</x>

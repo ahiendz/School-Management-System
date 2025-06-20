@@ -5,6 +5,7 @@ from PyQt6 import uic
 import sys
 
 from views import admin_them_giao_vien as ad
+from widgets import dialog_themclass as dia
 
 class Admin_Them_Lop(QMainWindow):
     def __init__(self):
@@ -35,12 +36,20 @@ class Admin_Them_Lop(QMainWindow):
 
     def add_class(self):
     
-        stacked_index = self.stackedWidget.currentIndex()
-        if stacked_index == 0:
-            print("Adding class to Khoi 6")
-        elif stacked_index == 1:
-            print("Adding class to Khoi 7")
-        elif stacked_index == 2:
-            print("Adding class to Khoi 8")
-        else:
-            print("Adding class to Khoi 9")
+        dialog = dia.Dialog_Them_Class()
+        if dialog.exec():
+            class_data = dialog.return_input_fields()
+            class_name = class_data['class_name']
+            khoi = class_data['khoi']
+
+            if khoi == '6':
+                self.danhsachkhoi6.addItem(class_name)
+            elif khoi == '7':
+                self.danhsachkhoi7.addItem(class_name)
+            elif khoi == '8':
+                self.danhsachkhoi8.addItem(class_name)
+            elif khoi == '9':
+                self.danhsachkhoi9.addItem(class_name)
+            else:
+                print("khoilop khong hop lek")
+                # them 1 thonng bao

@@ -5,5 +5,4 @@ import sys
 if __name__ == "__main__":
     app = login.QApplication(sys.argv)
     main_window = login.login()
-    main_window.show()
     sys.exit(app.exec())
