@@ -1,0 +1,27 @@
+[
+    {
+        "class": "6A",
+        "GVCN": "John Doe",
+        "students": []
+    },
+    {
+        "class": "7B",
+        "GVCN": "Jane Smith",
+        "students": []
+    },
+    {
+        "class": "8C",
+        "GVCN": "Alice Johnson",
+        "students": []
+    },
+    {
+        "class": "9D",
+        "GVCN": "Bob Brown",
+        "students": []
+    },
+    {
+        "name": "6B",
+        "teacher": "Mr. Hien",
+        "students": []
+    }
+]
