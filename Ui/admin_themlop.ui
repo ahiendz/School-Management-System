@@ -27,7 +27,7 @@
      <string notr="true">background-color: rgb(0, 0, 0);</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="khoi6">
      <widget class="QListWidget" name="danhsachkhoi6">
@@ -44,11 +44,6 @@
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 color: rgb(0, 0, 0);</string>
       </property>
-      <item>
-       <property name="text">
-        <string>6A</string>
-       </property>
-      </item>
      </widget>
     </widget>
     <widget class="QWidget" name="khoi7">
@@ -66,11 +61,6 @@ color: rgb(0, 0, 0);</string>
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 color: rgb(0, 0, 0);</string>
       </property>
-      <item>
-       <property name="text">
-        <string>7B</string>
-       </property>
-      </item>
      </widget>
     </widget>
     <widget class="QWidget" name="khoi8">
@@ -88,11 +78,6 @@ color: rgb(0, 0, 0);</string>
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 color: rgb(0, 0, 0);</string>
       </property>
-      <item>
-       <property name="text">
-        <string>8C</string>
-       </property>
-      </item>
      </widget>
     </widget>
     <widget class="QWidget" name="khoi9">
@@ -110,11 +95,6 @@ color: rgb(0, 0, 0);</string>
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 color: rgb(0, 0, 0);</string>
       </property>
-      <item>
-       <property name="text">
-        <string>9D</string>
-       </property>
-      </item>
      </widget>
     </widget>
    </widget>

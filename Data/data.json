@@ -1,25 +1,37 @@
 [
     {
-        "khoi": 8,
-        "lop": "8B",
-        "gvcn": "Ti\u00e1\u00ba\u00bfn",
+        "khoi": "7",
+        "lop": "7HNC",
+        "gvcn": "Thanh",
         "gvbm": {
-            "khtn": "Meo",
-            "anh": "Dog",
-            "van": "OE",
-            "toan": "UK"
+            "khtn": "D",
+            "anh": "E",
+            "van": "A",
+            "toan": "C"
         },
         "students": ""
     },
     {
-        "khoi": 7,
-        "lop": "7A",
-        "gvcn": "L",
+        "khoi": "9",
+        "lop": "9KO",
+        "gvcn": "Tr\u00fac",
         "gvbm": {
-            "khtn": "A",
-            "anh": "D",
-            "van": "C",
-            "toan": "T"
+            "khtn": "D",
+            "anh": "E",
+            "van": "A",
+            "toan": "C"
+        },
+        "students": ""
+    },
+    {
+        "khoi": "6",
+        "lop": "6U",
+        "gvcn": "Tr\u00fac",
+        "gvbm": {
+            "khtn": "D",
+            "anh": "E",
+            "van": "A",
+            "toan": "C"
         },
         "students": ""
     }

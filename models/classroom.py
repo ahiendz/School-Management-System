@@ -15,8 +15,9 @@ class Classroom:
 
 class ClassroomManager:
     def __init__(self):
+        self.data_path = "Data\data.json"
         self.classroom = list()
-        self.classroom_data_dict = data_io.load_json_data()    
+        self.classroom_data_dict = data_io.load_json_data(self.data_path)    
 
     def load_classrooms(self):
         for classroom in self.classroom_data_dict:
@@ -40,6 +41,9 @@ class ClassroomManager:
                 return classroom
         return None
 
+    def get_lop_list(self):
+        return [{'khoi' : classroom.khoi, 'lop' : classroom.lop} for classroom in self.classroom]
+
     def add_classroom(self, classroom_dict):
         new_classroom = Classroom(
             khoi=classroom_dict['khoi'],
@@ -56,13 +60,11 @@ class ClassroomManager:
 
         self.classroom.append(new_classroom)
         self.classroom_data_dict.append(classroom_dict)
-        data_io.write_json_data(self.classroom_data_dict)
+        data_io.write_json_data(self.classroom_data_dict, self.data_path)
 
     def remove_classroom(self, classroom_name):
         classroom = self.get_classroom_item_by_class(classroom_name)
         if classroom:
             self.classroom.remove(classroom)
             self.classroom_data_dict = [c for c in self.classroom_data_dict if c['lop'] != classroom_name]
-            data_io.write_json_data(self.classroom_data_dict)
-        else:
-            raise ValueError(f"Classroom '{classroom_name}' not found.")
+            data_io.write_json_data(self.classroom_data_dict, self.data_path)

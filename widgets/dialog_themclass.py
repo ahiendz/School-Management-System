@@ -15,12 +15,15 @@ class Dialog_Them_Class(QDialog):
         self.comboBox.setEditable(True)
     
     def return_input_fields(self) -> dict:
-        return  {
-        'khoi' : self.khoi.currentText(),
-        'class_name' : self.lop.text(),
-        'GVCN' : self.gvcn.currentText(),
-        'GV_Van': self.gvV.currentText(),
-        'GV_Toan' : self.gvT.currentText(),
-        'GV_Anh' : self.gvA.currentText(),
-        'GV_KHTN' : self.gvK.currentText()
+        return {
+            'khoi': self.khoi.currentText(),
+            'lop': self.lop.text(),
+            'gvcn': self.gvcn.currentText(),
+            'gvbm': {
+                'khtn': self.gvK.currentText(),
+                'anh': self.gvA.currentText(),
+                'van': self.gvV.currentText(),
+                'toan': self.gvT.currentText()
+            },
+            'students': ""
         }

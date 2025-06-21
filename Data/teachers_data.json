@@ -1,16 +1,9 @@
 [
     {
-        "ten" : "Nguyen DUong THanh Truc",
-        "Joi tinh" : "Nu",
-        "Age" : 14,
-        "Mon Day" : "Van",
-        "GVCN Lop" : "6A"
-    },
-    {
-        "ten" : "Thanh Truc NGuyen DUong",
-        "Joi tinh" : "Nu",
-        "Age" : 122,
-        "Mon Day" : "Anh",
-        "GVCN Lop" : "9D"
+        "name": "L\u00fd ANh Hi\u1ec3n",
+        "gioi tinh": "Nam",
+        "age": "13",
+        "mon day": "KHTN",
+        "gvcn lop": "9D"
     }
 ]
