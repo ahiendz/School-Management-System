@@ -44,6 +44,12 @@ class ClassroomManager:
     def get_lop_list(self):
         return [{'khoi' : classroom.khoi, 'lop' : classroom.lop} for classroom in self.classroom]
 
+    def get_available_classroom(self):
+        self.load_classrooms()
+        classes = self.classroom
+
+        return [classroom.lop for classroom in classes if classroom.gvcn == "Không có giáo viên trống"]
+
     def add_classroom(self, classroom_dict):
         new_classroom = Classroom(
             khoi=classroom_dict['khoi'],

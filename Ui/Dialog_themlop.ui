@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -77,12 +77,7 @@
        <widget class="QComboBox" name="gvcn">
         <item>
          <property name="text">
-          <string>Trúc</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Thanh</string>
+          <string>Không có giáo viên trống</string>
          </property>
         </item>
        </widget>
@@ -98,12 +93,7 @@
        <widget class="QComboBox" name="gvV">
         <item>
          <property name="text">
-          <string>A</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>B</string>
+          <string>Không có giáo viên trống</string>
          </property>
         </item>
        </widget>
@@ -119,12 +109,7 @@
        <widget class="QComboBox" name="gvT">
         <item>
          <property name="text">
-          <string>C</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>D</string>
+          <string>Không có giáo viên trống</string>
          </property>
         </item>
        </widget>
@@ -140,12 +125,7 @@
        <widget class="QComboBox" name="gvA">
         <item>
          <property name="text">
-          <string>E</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>F</string>
+          <string>Không có giáo viên trống</string>
          </property>
         </item>
        </widget>
@@ -161,12 +141,7 @@
        <widget class="QComboBox" name="gvK">
         <item>
          <property name="text">
-          <string>D</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>G</string>
+          <string>Không có giáo viên trống</string>
          </property>
         </item>
        </widget>

@@ -1,18 +1,25 @@
 from PyQt6.QtWidgets import QDialog
 from PyQt6 import uic
+from models import teacher
 
 class Dialog_Them_Class(QDialog):
     def __init__(self):
         super().__init__()
         uic.loadUi(r"Ui\Dialog_themlop.ui", self)
         
-        # self.setUpUi()
+        self.setUpUi()
         
         self.show()
     
     def setUpUi(self):
-        self.comboBox.addItems(["Khoi 6", "Khoi 7", "Khoi 8", "Khoi 9"])
-        self.comboBox.setEditable(True)
+        self.teacher = teacher.TeacherManager()
+        teachers = self.teacher.get_available_teachers()
+
+        self.gvcn.addItems(teachers["gvcn"])
+        self.gvV.addItems(teachers["gvV"])
+        self.gvT.addItems(teachers["gvT"])
+        self.gvA.addItems(teachers["gvA"])
+        self.gvK.addItems(teachers["gvK"])
     
     def return_input_fields(self) -> dict:
         return {

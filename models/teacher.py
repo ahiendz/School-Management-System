@@ -34,6 +34,19 @@ class TeacherManager:
                 return teacher
         return None
 
+    def get_available_teachers(self):  # hàm nảy để đưa cách dict giáo viên còn trống lên dialog  thêm clasrooom
+        self.load_teacher()
+        teachers = self.teacher_data
+
+        return {
+            "gvcn" : [teacher.name for teacher in teachers if teacher.gvcn == "Chưa có"],
+            "gvV" : [teacher.name for teacher in teachers if teacher.mon == "Văn"],
+            "gvT" : [teacher.name for teacher in teachers if teacher.mon == "Toán"],
+            "gvA" : [teacher.name for teacher in teachers if teacher.mon == "Anh"],
+            "gvK" : [teacher.name for teacher in teachers if teacher.mon == "KHTN"],
+            
+        }
+    
     def add_teacher(self, teacher_dict):
         new_teacher = Teacher(
             name = teacher_dict['name'],

@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -59,7 +59,7 @@
       <item>
        <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>TUổi</string>
+         <string>Tuổi</string>
         </property>
        </widget>
       </item>
@@ -108,12 +108,7 @@
        <widget class="QComboBox" name="gvcn">
         <item>
          <property name="text">
-          <string>7B</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>9D</string>
+          <string>Không có lớp trống</string>
          </property>
         </item>
        </widget>
