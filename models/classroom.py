@@ -37,7 +37,15 @@ class ClassroomManager:
 
     def get_classroom_item_by_class(self, classroom_name):
         for classroom in self.classroom:
+            print(classroom.lop)
             if classroom.lop == classroom_name:
+                print("Tìm dc rồi")
+                return classroom
+        return None
+    
+    def get_classroom_dicty_by_class(self, classroom_name):
+        for classroom in self.classroom_data_dict:
+            if classroom['lop'] == classroom_name:
                 return classroom
         return None
 
@@ -49,6 +57,16 @@ class ClassroomManager:
         classes = self.classroom
 
         return [classroom.lop for classroom in classes if classroom.gvcn == "Không có giáo viên trống"]
+
+    def assign_gvcn_to_class(self, lop, gvcn):
+        self.load_classrooms()
+        classroom_change_data = self.get_classroom_item_by_class(lop)
+        classroom_change_dict = self.get_classroom_dicty_by_class(lop)
+
+        classroom_change_data.gvcn = gvcn
+        classroom_change_dict['gvcn'] = gvcn
+        
+        data_io.write_json_data(self.classroom_data_dict, self.data_path)
 
     def add_classroom(self, classroom_dict):
         new_classroom = Classroom(

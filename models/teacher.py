@@ -1,4 +1,5 @@
 from Data import data_io
+from models import classroom
 
 class Teacher:
     def __init__(self, name, gioitinh, age, mon, gvcn):
@@ -39,7 +40,7 @@ class TeacherManager:
         teachers = self.teacher_data
 
         return {
-            "gvcn" : [teacher.name for teacher in teachers if teacher.gvcn == "Chưa có"],
+            "gvcn" : [teacher.name for teacher in teachers if not teacher.gvcn],
             "gvV" : [teacher.name for teacher in teachers if teacher.mon == "Văn"],
             "gvT" : [teacher.name for teacher in teachers if teacher.mon == "Toán"],
             "gvA" : [teacher.name for teacher in teachers if teacher.mon == "Anh"],
@@ -58,6 +59,10 @@ class TeacherManager:
         self.teacher_data.append(new_teacher)
         self.teacher_data_dict.append(teacher_dict)
         data_io.write_json_data(self.teacher_data_dict, self.data_path)
+
+        if teacher_dict['gvcn lop']:
+            cl = classroom.ClassroomManager()
+            cl.assign_gvcn_to_class(teacher_dict["gvcn lop"], teacher_dict['name'])
 
     def remove_teacher(self, teacher_name):
         teacher = self.get_teacher_by_name(teacher_name)

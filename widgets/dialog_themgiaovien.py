@@ -23,5 +23,5 @@ class Dialog_Them_Giao_Vien(QDialog):
             'gioi tinh' : self.gioitinh.currentText(),
             'age' : self.age.text(),
             'mon day' : self.mon.currentText(),
-            'gvcn lop' : self.gvcn.currentText()
+            'gvcn lop' : None if self.gvcn.currentText() == "Không có lớp trống" else self.gvcn.currentText()
         }
