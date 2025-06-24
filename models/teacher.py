@@ -108,8 +108,45 @@ class TeacherManager:
             self.teacher_data_dict = [n for n in self.teacher_data_dict if n['name'] != teacher_name]
             data_io.write_json_data(self.teacher_data_dict, self.data_path)
 
-    def edit_teacher(self, teacher_name):
-        teacher = self.get_teacher_by_name(teacher_name)
-        if teacher:
-            print("đã qua test teacher")
-            
+    def edit_teacher(self, teacher_name, new_teacher_dict):
+        teacher_data = self.get_teacher_by_name(teacher_name)
+        teacher_dict = self.get_teacher_dict_by_name(teacher_name)
+
+        if teacher_data and teacher_dict:
+            old_gvcn_lop = teacher_data.gvcn  # Lưu lớp GVCN cũ
+            new_gvcn_lop = new_teacher_dict['gvcn lop']
+
+            # Cập nhật thông tin giáo viên
+            teacher_data.name = new_teacher_dict['name']
+            teacher_data.gioitinh = new_teacher_dict['gioi tinh']
+            teacher_data.age = new_teacher_dict['age']
+            teacher_data.mon = new_teacher_dict['mon day']
+            teacher_data.gvcn = new_gvcn_lop
+
+            teacher_dict['name'] = new_teacher_dict['name']
+            teacher_dict['gioi tinh'] = new_teacher_dict['gioi tinh']
+            teacher_dict['age'] = new_teacher_dict['age']
+            teacher_dict['mon day'] = new_teacher_dict['mon day']
+            teacher_dict['gvcn lop'] = new_gvcn_lop
+
+            # Xử lý cập nhật lớp học nếu thay đổi GVCN
+            from models.classroom import ClassroomManager
+            cl_manager = ClassroomManager()
+            cl_manager.load_classrooms()
+
+            # Nếu có lớp GVCN cũ và nó khác lớp mới, xóa GVCN ở lớp cũ
+            if old_gvcn_lop and old_gvcn_lop != new_gvcn_lop:
+                old_class = cl_manager.get_classroom_dicty_by_class(old_gvcn_lop)
+                if old_class:
+                    old_class['gvcn'] = None
+
+            # Nếu có lớp GVCN mới, cập nhật GVCN ở lớp mới
+            if new_gvcn_lop:
+                new_class = cl_manager.get_classroom_dicty_by_class(new_gvcn_lop)
+                if new_class:
+                    new_class['gvcn'] = new_teacher_dict['name']
+
+            # Lưu lại dữ liệu lớp học
+            data_io.write_json_data(cl_manager.classroom_data_dict, cl_manager.data_path)
+            # Lưu lại dữ liệu giáo viên
+            data_io.write_json_data(self.teacher_data_dict, self.data_path)

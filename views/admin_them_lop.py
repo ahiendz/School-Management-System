@@ -4,8 +4,10 @@ from PyQt6.QtWidgets import (
 from PyQt6 import uic
 import sys
 
+from widgets.dialog_view_class import Dialog_View_Class
 from views import admin_them_giao_vien as ad
 from widgets import dialog_themclass as dia
+from widgets.dialog_edit_class import Dialog_Edit_Class
 from models import classroom
 
 class Admin_Them_Lop(QMainWindow):
@@ -33,6 +35,9 @@ class Admin_Them_Lop(QMainWindow):
 
         self.add_btn.clicked.connect(self.add_class)
         self.remove_btn.clicked.connect(self.remove_class)
+        self.edit_btn.clicked.connect(self.edit_class)
+        self.view_btn.clicked.connect(self.view_class)
+
 
     def change_stacked_widget(self, index): 
         self.stackedWidget.setCurrentIndex(index)
@@ -93,3 +98,29 @@ class Admin_Them_Lop(QMainWindow):
         if choice == QMessageBox.StandardButton.Yes:
             listWidget.takeItem(classroom_id)
             self.ClassroomManager.remove_classroom(classroom_sel)
+
+    def edit_class(self):
+        current_index = self.stackedWidget.currentIndex()
+        listWidget = [self.danhsachkhoi6, self.danhsachkhoi7, self.danhsachkhoi8, self.danhsachkhoi9][current_index]
+        row = listWidget.currentRow()
+
+        if row >= 0:
+            selected_lop = listWidget.item(row).text()
+            old_data = self.ClassroomManager.get_classroom_dicty_by_class(selected_lop)
+
+            dialog = Dialog_Edit_Class(old_data)
+            if dialog.exec():
+                new_data = dialog.return_input_fields()
+                self.ClassroomManager.edit_classroom(selected_lop, new_data)
+
+                listWidget.item(row).setText(new_data['lop'])
+
+    def view_class(self):
+        current_index = self.stackedWidget.currentIndex()
+        listWidget = [self.danhsachkhoi6, self.danhsachkhoi7, self.danhsachkhoi8, self.danhsachkhoi9][current_index]
+        row = listWidget.currentRow()
+
+        if row >= 0:
+            class_name = listWidget.item(row).text()
+            dialog = Dialog_View_Class(class_name)
+            dialog.exec()

@@ -17,9 +17,9 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>170</x>
       <y>0</y>
-      <width>581</width>
+      <width>617</width>
       <height>61</height>
      </rect>
     </property>
@@ -51,6 +51,16 @@
        </property>
        <property name="text">
         <string>EDIT GIáo VIên</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="view_btn">
+       <property name="styleSheet">
+        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
+       </property>
+       <property name="text">
+        <string>VIEW MORE</string>
        </property>
       </widget>
      </item>

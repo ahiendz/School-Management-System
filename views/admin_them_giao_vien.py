@@ -1,10 +1,9 @@
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QMessageBox
 )
-from widgets import dialog_themgiaovien
+from widgets import dialog_themgiaovien, dialog_editgiaovien, dialog_view_teacher
 from PyQt6 import uic
 from models import teacher
-import sys
 
 from views import admin_them_lop as ad
 class Admin_Them_Giao_Vien(QMainWindow):
@@ -21,11 +20,14 @@ class Admin_Them_Giao_Vien(QMainWindow):
         self.TeacherManager.load_teacher()
 
         self.load_teacher_to_ui()
+        self.danhsachGV.setCurrentRow(0)
 
         self.themlop.clicked.connect(self.change_admin_themlop)
         self.add_btn.clicked.connect(self.add_teacher)
-        self.remove_btn.clicked.connect(self.remove_teacher
-                                        )
+        self.remove_btn.clicked.connect(self.remove_teacher)
+        self.edit_btn.clicked.connect(self.edit_Teacher)
+        self.view_btn.clicked.connect(self.view_teacher)
+
     def change_admin_themlop(self):
         self.admin_them_lop = ad.Admin_Them_Lop()
         self.admin_them_lop.show()
@@ -54,3 +56,27 @@ class Admin_Them_Giao_Vien(QMainWindow):
         if choice == QMessageBox.StandardButton.Yes:
             self.danhsachGV.takeItem(teacher_item_id)
             self.TeacherManager.remove_teacher(teacher_name_selected)
+
+    def edit_Teacher(self):
+        curr_id = self.danhsachGV.currentRow()
+        teacher = self.danhsachGV.item(curr_id)
+        teacher_name = teacher.text()
+
+        teacher_data = self.TeacherManager.get_teacher_by_name(teacher_name)
+
+        dialog_edit_teacher = dialog_editgiaovien.Dialog_Edit_Giao_Vien(teacher_data)
+        if dialog_edit_teacher.exec():
+            data_return = dialog_edit_teacher.return_input_fields()
+            data = data_return[0]
+            self.danhsachGV.item(curr_id).setText(data['name'])
+            self.TeacherManager.edit_teacher(data_return[1], data)
+
+    def view_teacher(self):
+        current_index = self.danhsachGV.currentRow()
+        if current_index < 0:
+            QMessageBox.warning(self, "Thông báo", "Vui lòng chọn giáo viên để xem thông tin.")
+            return
+
+        teacher_name = self.danhsachGV.item(current_index).text()
+        dialog = dialog_view_teacher.Dialog_View_Teacher(teacher_name)
+        dialog.exec()

@@ -89,6 +89,7 @@ class ClassroomManager:
         data_io.write_json_data(self.classroom_data_dict, self.data_path)
 
         if classroom_dict.get("gvcn") is not None or any(v is not None for v in classroom_dict.get("gvbm", {}).values()):
+            print(classroom_dict.get("gvbm", {}).values())
             teacher_class = teacher.TeacherManager()
             teacher_class.update_teacher_mon_day(classroom_dict['lop'], classroom_dict["gvbm"], classroom_dict['gvcn']) # cần đặt lại tên
         
@@ -97,4 +98,36 @@ class ClassroomManager:
         if classroom:
             self.classroom.remove(classroom)
             self.classroom_data_dict = [c for c in self.classroom_data_dict if c['lop'] != classroom_name]
+            data_io.write_json_data(self.classroom_data_dict, self.data_path)
+
+    def edit_classroom(self, class_name, new_data):
+        classroom_item = self.get_classroom_item_by_class(class_name)
+        classroom_dict = self.get_classroom_dicty_by_class(class_name)
+
+        if classroom_item and classroom_dict:
+            classroom_item.khoi = new_data['khoi']
+            classroom_item.lop = new_data['lop']
+            classroom_item.gvcn = new_data['gvcn']
+            classroom_item.teachers = {
+                "Toán": new_data['gvbm'].get("toan"),
+                "Văn": new_data['gvbm'].get("van"),
+                "Anh": new_data['gvbm'].get("anh"),
+                "KHTN": new_data['gvbm'].get("khtn")
+            }
+
+            classroom_dict['khoi'] = new_data['khoi']
+            classroom_dict['lop'] = new_data['lop']
+            classroom_dict['gvcn'] = new_data['gvcn']
+            classroom_dict['gvbm'] = {
+                "toan": new_data['gvbm'].get("toan"),
+                "van": new_data['gvbm'].get("van"),
+                "anh": new_data['gvbm'].get("anh"),
+                "khtn": new_data['gvbm'].get("khtn")
+            }
+
+            from models.teacher import TeacherManager
+            tm = TeacherManager()
+            tm.update_teacher_mon_day(new_data['lop'], new_data['gvbm'], new_data['gvcn'])
+
+            import Data.data_io as data_io
             data_io.write_json_data(self.classroom_data_dict, self.data_path)
