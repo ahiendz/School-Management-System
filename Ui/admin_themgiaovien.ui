@@ -139,11 +139,97 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>70</y>
+      <y>130</y>
       <width>661</width>
-      <height>521</height>
+      <height>461</height>
      </rect>
     </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>90</y>
+      <width>641</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QComboBox" name="loc_theo_mon">
+       <item>
+        <property name="text">
+         <string>Tất cả</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Toán</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Văn</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Anh</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>KHTN</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="loc_theo_gioi_tinh">
+       <item>
+        <property name="text">
+         <string>Tất cả</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Nam</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Nữ</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="loc_theo_gvcn">
+       <item>
+        <property name="text">
+         <string>Tất cả</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Là GVCN</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Không Là GVCN</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="loc_btn">
+       <property name="text">
+        <string>Lọc</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>

@@ -18,7 +18,9 @@ class ClassroomManager:
     def __init__(self):
         self.data_path = "Data\data.json"
         self.classroom = list()
-        self.classroom_data_dict = data_io.load_json_data(self.data_path)    
+        self.classroom_data_dict = data_io.load_json_data(self.data_path)
+
+        self.teacher_manager = teacher.TeacherManager()
 
     def load_classrooms(self):
         for classroom in self.classroom_data_dict:
@@ -90,15 +92,42 @@ class ClassroomManager:
 
         if classroom_dict.get("gvcn") is not None or any(v is not None for v in classroom_dict.get("gvbm", {}).values()):
             print(classroom_dict.get("gvbm", {}).values())
-            teacher_class = teacher.TeacherManager()
-            teacher_class.update_teacher_mon_day(classroom_dict['lop'], classroom_dict["gvbm"], classroom_dict['gvcn']) # cần đặt lại tên
+
+            self.teacher_manager.update_teacher_mon_day(classroom_dict['lop'], classroom_dict["gvbm"], classroom_dict['gvcn']) # cần đặt lại tên
         
-    def remove_classroom(self, classroom_name):
-        classroom = self.get_classroom_item_by_class(classroom_name)
+    def remove_classroom(self, lop):
+        classroom = self.get_classroom_item_by_class(lop)
         if classroom:
+            # Gỡ lớp khỏi giáo viên liên quan
+            self.teacher_manager.load_teacher()
+
+            for teacher in self.teacher_manager.teacher_data:
+                if teacher.gvcn == lop:
+                    teacher.gvcn = None
+                if lop in teacher.lop_day:
+                    teacher.lop_day.remove(lop)
+
+            # ✅ Cập nhật lại teacher_data_dict sau khi chỉnh object
+            self.teacher_manager.teacher_data_dict = [
+                {
+                    "name": t.name,
+                    "gioi tinh": t.gioitinh,
+                    "age": t.age,
+                    "mon day": t.mon,
+                    "gvcn lop": t.gvcn,
+                    "lop day": t.lop_day
+                }
+                for t in self.teacher_manager.teacher_data
+            ]
+
+            # ✅ Ghi lại file giáo viên
+            data_io.write_json_data(self.teacher_manager.teacher_data_dict, self.teacher_manager.data_path)
+
+            # Xóa lớp khỏi dữ liệu lớp học
             self.classroom.remove(classroom)
-            self.classroom_data_dict = [c for c in self.classroom_data_dict if c['lop'] != classroom_name]
+            self.classroom_data_dict = [c for c in self.classroom_data_dict if c['lop'] != lop]
             data_io.write_json_data(self.classroom_data_dict, self.data_path)
+
 
     def edit_classroom(self, class_name, new_data):
         classroom_item = self.get_classroom_item_by_class(class_name)
@@ -125,9 +154,7 @@ class ClassroomManager:
                 "khtn": new_data['gvbm'].get("khtn")
             }
 
-            from models.teacher import TeacherManager
-            tm = TeacherManager()
-            tm.update_teacher_mon_day(new_data['lop'], new_data['gvbm'], new_data['gvcn'])
+            self.teacher_manager.update_teacher_mon_day(new_data['lop'], new_data['gvbm'], new_data['gvcn'])
 
             import Data.data_io as data_io
             data_io.write_json_data(self.classroom_data_dict, self.data_path)

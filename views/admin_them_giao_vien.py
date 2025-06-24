@@ -27,6 +27,7 @@ class Admin_Them_Giao_Vien(QMainWindow):
         self.remove_btn.clicked.connect(self.remove_teacher)
         self.edit_btn.clicked.connect(self.edit_Teacher)
         self.view_btn.clicked.connect(self.view_teacher)
+        self.loc_btn.clicked.connect(self.filter_teacher)
 
     def change_admin_themlop(self):
         self.admin_them_lop = ad.Admin_Them_Lop()
@@ -80,3 +81,12 @@ class Admin_Them_Giao_Vien(QMainWindow):
         teacher_name = self.danhsachGV.item(current_index).text()
         dialog = dialog_view_teacher.Dialog_View_Teacher(teacher_name)
         dialog.exec()
+
+    def filter_teacher(self):
+        option1 = self.loc_theo_mon.currentText()
+        option2 = self.loc_theo_gioi_tinh.currentText()
+        option3 = self.loc_theo_gvcn.currentText()
+
+        teachers = self.TeacherManager.filter_teachers(option1, option2, option3)
+        self.danhsachGV.clear()
+        self.danhsachGV.addItems(teachers)

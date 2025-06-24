@@ -104,6 +104,22 @@ class TeacherManager:
     def remove_teacher(self, teacher_name):
         teacher = self.get_teacher_by_name(teacher_name)
         if teacher:
+            # ✅ Update lớp học liên quan
+            cl_manager = classroom.ClassroomManager()
+            cl_manager.load_classrooms()
+
+            for class_dict in cl_manager.classroom_data_dict:
+                # GVCN bị xóa → null
+                if class_dict.get("gvcn") == teacher_name:
+                    class_dict["gvcn"] = None
+
+                # GVBM bị xóa → null môn tương ứng
+                for mon_key in ["toan", "van", "anh", "khtn"]:
+                    if class_dict.get("gvbm", {}).get(mon_key) == teacher_name:
+                        class_dict["gvbm"][mon_key] = None
+
+            data_io.write_json_data(cl_manager.classroom_data_dict, cl_manager.data_path)
+
             self.teacher_data.remove(teacher)
             self.teacher_data_dict = [n for n in self.teacher_data_dict if n['name'] != teacher_name]
             data_io.write_json_data(self.teacher_data_dict, self.data_path)
@@ -130,8 +146,7 @@ class TeacherManager:
             teacher_dict['gvcn lop'] = new_gvcn_lop
 
             # Xử lý cập nhật lớp học nếu thay đổi GVCN
-            from models.classroom import ClassroomManager
-            cl_manager = ClassroomManager()
+            cl_manager = classroom.ClassroomManager()
             cl_manager.load_classrooms()
 
             # Nếu có lớp GVCN cũ và nó khác lớp mới, xóa GVCN ở lớp cũ
@@ -150,3 +165,27 @@ class TeacherManager:
             data_io.write_json_data(cl_manager.classroom_data_dict, cl_manager.data_path)
             # Lưu lại dữ liệu giáo viên
             data_io.write_json_data(self.teacher_data_dict, self.data_path)
+
+    def filter_teachers(self, subject, gender, gvcn_role):
+        self.load_teacher()
+        all_teachers = self.teacher_data
+
+        teacher_filtered = []
+        for teacher in all_teachers:
+            print(teacher.name, teacher.gvcn, type(teacher.gvcn))
+
+            if subject != "Tất cả" and teacher.mon != subject:
+                continue
+            if gender != "Tất cả" and teacher.gioitinh != gender:
+                continue
+
+            if gvcn_role == "Là GVCN":
+                if not teacher.gvcn:
+                    continue  # Không có lớp chủ nhiệm → bỏ
+            elif gvcn_role == "Không Là GVCN":
+                if teacher.gvcn:
+                    continue  # Có lớp chủ nhiệm → bỏ
+
+            teacher_filtered.append(teacher.name)
+
+        return teacher_filtered
