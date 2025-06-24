@@ -1,4 +1,5 @@
 import Data.data_io as data_io
+from models import teacher
 
 class Classroom:
     def __init__(self, khoi, lop, gvcn, teachers=None, students=None):
@@ -37,9 +38,7 @@ class ClassroomManager:
 
     def get_classroom_item_by_class(self, classroom_name):
         for classroom in self.classroom:
-            print(classroom.lop)
             if classroom.lop == classroom_name:
-                print("Tìm dc rồi")
                 return classroom
         return None
     
@@ -56,19 +55,22 @@ class ClassroomManager:
         self.load_classrooms()
         classes = self.classroom
 
-        return [classroom.lop for classroom in classes if classroom.gvcn == "Không có giáo viên trống"]
+        return [classroom.lop for classroom in classes if classroom.gvcn == None]
 
     def assign_gvcn_to_class(self, lop, gvcn):
         self.load_classrooms()
+        self.classroom_data_dict = data_io.load_json_data(self.data_path)
+
         classroom_change_data = self.get_classroom_item_by_class(lop)
         classroom_change_dict = self.get_classroom_dicty_by_class(lop)
 
-        classroom_change_data.gvcn = gvcn
-        classroom_change_dict['gvcn'] = gvcn
-        
+        if classroom_change_data is not None and classroom_change_dict is not None:
+            classroom_change_data.gvcn = gvcn
+            classroom_change_dict['gvcn'] = gvcn
+
         data_io.write_json_data(self.classroom_data_dict, self.data_path)
 
-    def add_classroom(self, classroom_dict):
+    def add_classroom(self, classroom_dict):   
         new_classroom = Classroom(
             khoi=classroom_dict['khoi'],
             lop=classroom_dict['lop'],
@@ -86,6 +88,10 @@ class ClassroomManager:
         self.classroom_data_dict.append(classroom_dict)
         data_io.write_json_data(self.classroom_data_dict, self.data_path)
 
+        if classroom_dict.get("gvcn") is not None or any(v is not None for v in classroom_dict.get("gvbm", {}).values()):
+            teacher_class = teacher.TeacherManager()
+            teacher_class.update_teacher_mon_day(classroom_dict['lop'], classroom_dict["gvbm"], classroom_dict['gvcn']) # cần đặt lại tên
+        
     def remove_classroom(self, classroom_name):
         classroom = self.get_classroom_item_by_class(classroom_name)
         if classroom:

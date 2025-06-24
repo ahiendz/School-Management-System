@@ -14,7 +14,7 @@ class Dialog_Them_Class(QDialog):
     def setUpUi(self):
         self.teacher = teacher.TeacherManager()
         teachers = self.teacher.get_available_teachers()
-
+        
         self.gvcn.addItems(teachers["gvcn"])
         self.gvV.addItems(teachers["gvV"])
         self.gvT.addItems(teachers["gvT"])
@@ -25,12 +25,12 @@ class Dialog_Them_Class(QDialog):
         return {
             'khoi': self.khoi.currentText(),
             'lop': self.lop.text(),
-            'gvcn': self.gvcn.currentText(),
+            'gvcn': self.gvcn.currentText() if self.gvcn.currentText() != "Không có giáo viên trống" else None,
             'gvbm': {
-                'khtn': self.gvK.currentText(),
-                'anh': self.gvA.currentText(),
-                'van': self.gvV.currentText(),
-                'toan': self.gvT.currentText()
+                'khtn': self.gvK.currentText() if self.gvK.currentText() != "Không có giáo viên trống" else None,
+                'anh': self.gvA.currentText() if self.gvA.currentText() != "Không có giáo viên trống" else None,
+                'van': self.gvV.currentText() if self.gvV.currentText() != "Không có giáo viên trống" else None,
+                'toan': self.gvT.currentText() if self.gvT.currentText() != "Không có giáo viên trống" else None
             },
             'students': ""
         }
