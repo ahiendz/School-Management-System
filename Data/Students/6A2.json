@@ -1,0 +1,112 @@
+[
+    {
+        "id": "MS90027",
+        "name": "Changed",
+        "gender": "Nam",
+        "dob": "2012-01-01",
+        "parent_account": "phhs_MS90027",
+        "parent_password": "phhs_MS90027_1234",
+        "class": "6A2",
+        "scores": {},
+        "comment": {}
+    },
+    {
+        "id": "MS01118",
+        "name": "Nguyen Duong Thanh Truc",
+        "gender": "Nữ",
+        "dob": "2012-02-02",
+        "parent_account": "phhs_MS01118",
+        "parent_password": "phhs_MS01118_1234",
+        "class": "6A2",
+        "scores": {},
+        "comment": {}
+    },
+    {
+        "id": "MS36844",
+        "name": "Nguyễn Văn C",
+        "gender": "Nam",
+        "dob": "2012-03-03",
+        "parent_account": "phhs_MS36844",
+        "parent_password": "phhs_MS36844_1234",
+        "class": "6A2",
+        "scores": {},
+        "comment": {}
+    },
+    {
+        "id": "MS83708",
+        "name": "Nguyễn Văn D",
+        "gender": "Nữ",
+        "dob": "2012-04-04",
+        "parent_account": "phhs_MS83708",
+        "parent_password": "phhs_MS83708_1234",
+        "class": "6A2",
+        "scores": {},
+        "comment": {}
+    },
+    {
+        "id": "MS25039",
+        "name": "Lý ANh Hiển",
+        "gender": "Nam",
+        "dob": "2012-05-05",
+        "parent_account": "phhs_MS25039",
+        "parent_password": "phhs_MS25039_1234",
+        "class": "6A2",
+        "scores": {},
+        "comment": {}
+    },
+    {
+        "id": "MS05711",
+        "name": "Nguyễn Văn F",
+        "gender": "Nữ",
+        "dob": "2012-06-06",
+        "parent_account": "phhs_MS05711",
+        "parent_password": "phhs_MS05711_1234",
+        "class": "6A2",
+        "scores": {},
+        "comment": {}
+    },
+    {
+        "id": "Cặc",
+        "name": "Nguyễn Văn G",
+        "gender": "Nam",
+        "dob": "2012-07-07",
+        "parent_account": "phhs_MS18375",
+        "parent_password": "phhs_MS18375_1234",
+        "class": "6A2",
+        "scores": {},
+        "comment": {}
+    },
+    {
+        "id": "MS48357",
+        "name": "Nguyễn Văn H",
+        "gender": "Nữ",
+        "dob": "2012-08-08",
+        "parent_account": "phhs_MS48357",
+        "parent_password": "phhs_MS48357_1234",
+        "class": "6A2",
+        "scores": {},
+        "comment": {}
+    },
+    {
+        "id": "MS48384",
+        "name": "NGuyễn DƯơng Thanh Trúc",
+        "gender": "Nữ",
+        "dob": "2012-10-10",
+        "parent_account": "phhs_MS48384",
+        "parent_password": "phhs_MS48384_1234",
+        "class": "6A2",
+        "scores": {},
+        "comment": {}
+    },
+    {
+        "id": "MS41687",
+        "name": "NGHUEi",
+        "gender": "Nam",
+        "dob": "1/1/2000",
+        "parent_account": "phhs_MS41687",
+        "parent_password": "phhs_MS41687_1234",
+        "class": "6A2",
+        "scores": {},
+        "comment": {}
+    }
+]

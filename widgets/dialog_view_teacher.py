@@ -3,7 +3,6 @@
 from PyQt6.QtWidgets import QDialog, QListWidgetItem
 from PyQt6 import uic
 from models.teacher import TeacherManager
-from models.classroom import ClassroomManager
 
 class Dialog_View_Teacher(QDialog):
     def __init__(self, teacher_name):
@@ -13,17 +12,9 @@ class Dialog_View_Teacher(QDialog):
         self.setWindowTitle("Thông tin giáo viên")
         
         self.teacher_mgr = TeacherManager()
-        self.class_mgr = ClassroomManager()
 
-        self.teacher_mgr.load_teacher()
-
-        self.teacher = self.teacher_mgr.get_teacher_by_name(teacher_name)
-        self.teacher_dict = self.teacher_mgr.get_teacher_dict_by_name(teacher_name)
-
-        if not self.teacher or not self.teacher_dict:
-            print("Ko thấy")
-            return
-
+        self.teacher = self.teacher_mgr.view_teacher(teacher_name)
+        
         # Đổ dữ liệu vào các label readonly
         self.name_label.setText(self.teacher.name)
         self.gender_label.setText(self.teacher.gioitinh)  # Sửa lại

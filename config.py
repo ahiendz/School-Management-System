@@ -2,7 +2,4 @@ import os
 
 class Config:
     def __init__(self):
-        self._config = {
-            'API_KEY': os.getenv('API_KEY', 'default_api_key'),
-            'API_URL': os.getenv('API_URL', 'https://api.example.com'), # Default URL   
-        }
+       self.teacher_data_json_path = "Data/teachers_data.json"

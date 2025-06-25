@@ -5,7 +5,7 @@ from widgets import dialog_themgiaovien, dialog_editgiaovien, dialog_view_teache
 from PyQt6 import uic
 from models import teacher
 
-from views import admin_them_lop as ad
+from views.Admin_Window import admin_them_lop as ad
 class Admin_Them_Giao_Vien(QMainWindow):
     def __init__(self):
         super().__init__()

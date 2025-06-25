@@ -1,9 +1,12 @@
 import json
+import os
 
 def load_json_data(path):
-    with open(path, 'r',encoding="utf-8") as f:
-        data = json.load(f)
-    return data
+    if not os.path.exists(path):
+        # Nếu file chưa tồn tại, trả về list rỗng
+        return []
+    with open(path, 'r', encoding='utf-8') as f:
+        return json.load(f)
 
 def write_json_data(data, path):
     with open(path, "w", encoding="utf-8") as f:

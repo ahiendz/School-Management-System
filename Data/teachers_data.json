@@ -1,9 +1,17 @@
 [
     {
-        "name": "L\u00fd ANh Hi\u1ec3n",
+        "name": "313",
         "gioi tinh": "Nam",
-        "age": "13",
-        "mon day": "KHTN",
-        "gvcn lop": "9D"
+        "age": "1313",
+        "mon day": "Toán",
+        "gvcn lop": "6.1",
+        "lop day": [
+            6.1,
+            6.2,
+            7.1,
+            9.1
+        ],
+        "username": "GV22084",
+        "password": "1234"
     }
 ]

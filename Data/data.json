@@ -1,37 +1,49 @@
 [
     {
-        "khoi": "7",
-        "lop": "7HNC",
-        "gvcn": "Thanh",
+        "khoi": "6",
+        "lop": "6t1",
+        "gvcn": "313",
         "gvbm": {
-            "khtn": "D",
-            "anh": "E",
-            "van": "A",
-            "toan": "C"
-        },
-        "students": ""
-    },
-    {
-        "khoi": "9",
-        "lop": "9KO",
-        "gvcn": "Tr\u00fac",
-        "gvbm": {
-            "khtn": "D",
-            "anh": "E",
-            "van": "A",
-            "toan": "C"
+            "toan": null,
+            "van": null,
+            "anh": null,
+            "khtn": "A"
         },
         "students": ""
     },
     {
         "khoi": "6",
-        "lop": "6U",
-        "gvcn": "Tr\u00fac",
+        "lop": "6A1",
+        "gvcn": null,
         "gvbm": {
-            "khtn": "D",
-            "anh": "E",
-            "van": "A",
-            "toan": "C"
+            "toan": null,
+            "van": null,
+            "anh": null,
+            "khtn": null
+        },
+        "students": ""
+    },
+    {
+        "khoi": "8",
+        "lop": "8.23",
+        "gvcn": null,
+        "gvbm": {
+            "khtn": null,
+            "anh": null,
+            "van": null,
+            "toan": null
+        },
+        "students": ""
+    },
+    {
+        "khoi": "6",
+        "lop": "6A2",
+        "gvcn": null,
+        "gvbm": {
+            "khtn": null,
+            "anh": null,
+            "van": null,
+            "toan": null
         },
         "students": ""
     }

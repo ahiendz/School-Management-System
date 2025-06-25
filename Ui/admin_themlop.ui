@@ -17,7 +17,7 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>140</x>
       <y>80</y>
       <width>671</width>
       <height>501</height>
@@ -214,10 +214,10 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>10</y>
-      <width>581</width>
-      <height>61</height>
+      <x>140</x>
+      <y>0</y>
+      <width>676</width>
+      <height>81</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -258,6 +258,16 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
        </property>
        <property name="text">
         <string>VIEW MORE</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mngr_btn">
+       <property name="styleSheet">
+        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
+       </property>
+       <property name="text">
+        <string>MANAGER STUDENT</string>
        </property>
       </widget>
      </item>

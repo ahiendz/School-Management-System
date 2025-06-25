@@ -38,8 +38,10 @@ for classr in classroomManager.classroom:
 print("Test load lop list")
 print(classroomManager.get_lop_list())
 
-print("Test remove class")
+print("Test get_available_teachers trong model claasroom")
+teas = classroomManager.get_available_teachers()
 
+print(teas)
    # test teacher model
 # from models import teacher
 

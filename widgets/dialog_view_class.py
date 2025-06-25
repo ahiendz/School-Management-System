@@ -12,19 +12,15 @@ class Dialog_View_Class(QDialog):
         self.setWindowTitle("Thông tin lớp học")
 
         self.class_mgr = ClassroomManager()
-        self.class_mgr.load_classrooms()
-
-        classroom = self.class_mgr.get_classroom_dicty_by_class(class_name)
-        if not classroom:
-            return
+        classroom = self.class_mgr.view(class_name)
 
         # Set thông tin cơ bản
-        self.khoi_label.setText(classroom['khoi'])
-        self.lop_label.setText(classroom['lop'])
-        self.gvcn_label.setText(classroom['gvcn'] or "Không có GVCN")
+        self.khoi_label.setText(classroom.khoi)
+        self.lop_label.setText(classroom.lop)
+        self.gvcn_label.setText(classroom.gvcn or "Không có GVCN")
 
         # Set GVBM
-        gvbm = classroom.get("gvbm", {})
+        gvbm = classroom.teachers
         self.gvT_label.setText(gvbm.get("toan") or "Không có")
         self.gvV_label.setText(gvbm.get("van") or "Không có")
         self.gvA_label.setText(gvbm.get("anh") or "Không có")

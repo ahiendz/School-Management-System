@@ -158,3 +158,13 @@ class ClassroomManager:
 
             import Data.data_io as data_io
             data_io.write_json_data(self.classroom_data_dict, self.data_path)
+    
+    def view_class(self, class_name):
+        self.load_classrooms()
+
+        classroom = self.get_classroom_item_by_class(class_name)
+        if not classroom:
+            return
+        
+        return classroom
+

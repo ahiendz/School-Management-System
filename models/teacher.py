@@ -1,5 +1,6 @@
 from Data import data_io
 from models import classroom
+import random
 
 class Teacher:
     def __init__(self, name, gioitinh, age, mon, gvcn, lop_day):
@@ -83,8 +84,25 @@ class TeacherManager:
 
         data_io.write_json_data(self.teacher_data_dict, self.data_path)
 
+    
 
     def add_teacher(self, teacher_dict):
+        def generate_username(existing_usernames):
+            while True:
+                username = f"GV{random.randint(10000, 99999)}"
+                if username not in existing_usernames:
+                    return username
+
+        # Tạo username/mật khẩu mặc định
+        existing_usernames = [t.get("username", "") for t in self.teacher_data_dict]
+        username = generate_username(existing_usernames)
+        password = "1234"
+
+        # Gán tài khoản vào dict
+        teacher_dict["username"] = username
+        teacher_dict["password"] = password
+
+        # Tạo object và lưu
         new_teacher = Teacher(
             name = teacher_dict['name'],
             gioitinh = teacher_dict['gioi tinh'],
@@ -100,6 +118,7 @@ class TeacherManager:
         if teacher_dict['gvcn lop']:
             cl = classroom.ClassroomManager()
             cl.assign_gvcn_to_class(teacher_dict["gvcn lop"], teacher_dict['name'])
+
 
     def remove_teacher(self, teacher_name):
         teacher = self.get_teacher_by_name(teacher_name)
@@ -189,3 +208,14 @@ class TeacherManager:
             teacher_filtered.append(teacher.name)
 
         return teacher_filtered
+    
+    def view_teacher(self, teacher_name):
+        self.load_teacher()
+
+        teacher = self.get_teacher_by_name(teacher_name)
+
+        if not teacher:
+            print("Ko thấy")
+            return
+        
+        return teacher

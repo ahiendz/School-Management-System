@@ -5,10 +5,11 @@ from PyQt6 import uic
 import sys
 
 from widgets.dialog_view_class import Dialog_View_Class
-from views import admin_them_giao_vien as ad
+from views.Admin_Window import admin_them_giao_vien as ad
 from widgets import dialog_themclass as dia
 from widgets.dialog_edit_class import Dialog_Edit_Class
 from models import classroom
+from views.Admin_Window import manager_student
 
 class Admin_Them_Lop(QMainWindow):
     def __init__(self):
@@ -37,6 +38,7 @@ class Admin_Them_Lop(QMainWindow):
         self.remove_btn.clicked.connect(self.remove_class)
         self.edit_btn.clicked.connect(self.edit_class)
         self.view_btn.clicked.connect(self.view_class)
+        self.mngr_btn.clicked.connect(self.mangerstudent)
 
 
     def change_stacked_widget(self, index): 
@@ -124,3 +126,14 @@ class Admin_Them_Lop(QMainWindow):
             class_name = listWidget.item(row).text()
             dialog = Dialog_View_Class(class_name)
             dialog.exec()
+
+    def mangerstudent(self):
+        current_index = self.stackedWidget.currentIndex()
+        listWidget = [self.danhsachkhoi6, self.danhsachkhoi7, self.danhsachkhoi8, self.danhsachkhoi9][current_index]
+        row = listWidget.currentRow()
+
+        if row >= 0:
+            class_name = listWidget.item(row).text()
+            self.manager_student_window = manager_student.ManagerStudentsWindow(class_name)
+            self.manager_student_window.show()
+
