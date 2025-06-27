@@ -1,26 +1,25 @@
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from models import student
-import pandas as pd
 
-dictCHUGI = []
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
+if parent_dir not in sys.path:
+    sys.path.insert(0, parent_dir)
 
-df = pd.read_excel(r"C:\Users\ACER\Downloads\Students_10_with_account.xlsx")  # Sheet mặc định
-
-for _, row in df.iterrows():
-    student_data = {
-        "id" : row["id"],
-        "name": row["name"],
-        "gender": row["gender"],
-        "dob": row["dob"],
-        "parent_account": row["parent_account"],
-        "parent_password": row["parent_password"]
+from views.Teacher_Window.teacher_window import TeacherWindow
+teacher_dict = {
+        "name": "Meo Meo",
+        "gioi tinh": "Nam",
+        "age": "14",
+        "mon day": "Toán",
+        "gvcn lop": "6A1",
+        "lop day": [
+            "6A1",
+            "7A1"
+        ],
+        "username": "GV27164",
+        "password": "1234"
     }
-    dictCHUGI.append(student_data)
 
-def output(data):
-    for st in data:
-        print(st['id'])
+tWIn = TeacherWindow(teacher_dict=teacher_dict)
 
-output(dictCHUGI)

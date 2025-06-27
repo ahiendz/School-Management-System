@@ -12,7 +12,7 @@ class Dialog_View_Class(QDialog):
         self.setWindowTitle("Thông tin lớp học")
 
         self.class_mgr = ClassroomManager()
-        classroom = self.class_mgr.view(class_name)
+        classroom = self.class_mgr.view_class(class_name)
 
         # Set thông tin cơ bản
         self.khoi_label.setText(classroom.khoi)

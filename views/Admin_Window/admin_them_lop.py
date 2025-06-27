@@ -136,4 +136,3 @@ class Admin_Them_Lop(QMainWindow):
             class_name = listWidget.item(row).text()
             self.manager_student_window = manager_student.ManagerStudentsWindow(class_name)
             self.manager_student_window.show()
-

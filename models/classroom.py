@@ -23,7 +23,7 @@ class ClassroomManager:
         self.teacher_manager = teacher.TeacherManager()
 
     def load_classrooms(self):
-        for classroom in self.classroom_data_dict:
+        for classroom in self.classroom_data_dict: 
             new_classroom = Classroom(
                 khoi=classroom['khoi'],
                 lop=classroom['lop'],

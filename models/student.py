@@ -37,6 +37,8 @@ class StudentManager:
         self.students = []
         self.students_dict = self.load_from_file()
 
+        # # thuộc tính để biết là teacher đang dạy môn nào để mà nhâp
+        # self.mon_day = mon_day
 
         self.load_student()
 
@@ -104,8 +106,6 @@ class StudentManager:
         self.students.append(new_student)
         new_student = new_student.to_dict()
         self.students_dict.append(new_student)
-        print("Student dic nè")
-        print(self.students_dict)
         self.save_to_file(self.students_dict)
 
     def remove_students_by_ids(self, id_list: list):
@@ -146,13 +146,12 @@ class StudentManager:
         export_folder = os.path.abspath(f"Data/Export")
         os.makedirs(export_folder, exist_ok=True)
 
-        # Suggest file name only (not full path)
         default_name = f"{self.curr_lop}_Student_List.xlsx"
 
         file_path, _ = QFileDialog.getSaveFileName(
             parent=None,
             caption="Export File",
-            directory=os.path.join(export_folder, default_name),  # use default_name as suggested file name
+            directory=os.path.join(export_folder, default_name),
             filter="Excel Files (*.xlsx)"
         )
 
@@ -174,3 +173,17 @@ class StudentManager:
 
         # There are student data
         a = ["id", "name", "gender", "dob", "parent_account", "parent_password", "class"]
+
+    def load_student_to_Window(self, hk, mon_day):
+        data = []
+        for student in self.students:
+            student_name = student.name
+            scores = student.scores
+            diem_theo_mon = scores.get(mon_day)
+            if diem_theo_mon is not None:
+                diem_theo_hk = diem_theo_mon.get(hk)
+                if diem_theo_hk is not None:
+                    diem_theo_hk['name'] = student_name
+                    data.append(diem_theo_hk)
+        
+        return data
