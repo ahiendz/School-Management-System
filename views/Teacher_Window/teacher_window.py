@@ -1,24 +1,22 @@
 from PyQt6.QtWidgets import (
     QMainWindow, QVBoxLayout, QListWidgetItem, QWidget, QTableView,
-    QAbstractItemView
+    QAbstractItemView, QMessageBox
 )
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
+from PyQt6.QtCore import Qt
 from PyQt6 import uic
 from models.student import StudentManager
-
 
 class TeacherWindow(QMainWindow):
     def __init__(self, teacher_dict):
         super().__init__()
-        print("Initializing TeacherWindow with teacher_dict:", teacher_dict)
         uic.loadUi(r"Ui\GV.ui", self)
-        
+
         self.teacher_dict_data = teacher_dict
         self.lop_day = [str(item) for item in self.teacher_dict_data['lop day']]
         self.mon_day = self.teacher_dict_data['mon day']
         self.semester = "semester_1"  # mặc định
 
-        # dict lưu model + bảng theo lớp
         self.bang_dict = {}
         self.model_dict = {}
 
@@ -26,8 +24,6 @@ class TeacherWindow(QMainWindow):
         self.show()
 
     def setUpUI(self):
-        print("Setting up UI...")
-        # Xóa trang cũ nếu có
         while self.stackedWidget.count() > 0:
             widget = self.stackedWidget.widget(0)
             self.stackedWidget.removeWidget(widget)
@@ -35,9 +31,7 @@ class TeacherWindow(QMainWindow):
 
         self.danhsachlopday.clear()
 
-        # Tạo các bảng điểm cho từng lớp
         for ten_lop in self.lop_day:
-            print(f"Adding class to list: {ten_lop}")
             item = QListWidgetItem(ten_lop)
             self.danhsachlopday.addItem(item)
 
@@ -46,97 +40,153 @@ class TeacherWindow(QMainWindow):
 
             bang = QTableView()
             bang.setEditTriggers(QAbstractItemView.EditTrigger.DoubleClicked)
+            bang.verticalHeader().setVisible(True)
+            bang.horizontalHeader().setVisible(True)
             layout.addWidget(bang)
 
             model = QStandardItemModel()
-            model.setHorizontalHeaderLabels([
-                "Họ tên", "Điểm miệng", "Điểm 15 phút", "Điểm 1 tiết", "Điểm giữa kỳ", "Điểm cuối kỳ"
-            ])
-            bang.setModel(model)
-
-            # Style
-            bang.setStyleSheet("""
-                QTableView {
-                    border: 1px solid #ccc;
-                    gridline-color: #aaa;
-                    font-size: 14px;
-                    selection-background-color: #000000;
-                    selection-color: white;
-                }
-                QHeaderView::section {
-                    background-color: #000000;
-                    color: white;
-                    padding: 4px;
-                    border: 1px solid #ccc;
-                }
-            """)
 
             self.bang_dict[ten_lop] = bang
             self.model_dict[ten_lop] = model
-
             self.stackedWidget.addWidget(trang)
 
-        # Sự kiện chọn lớp
         self.danhsachlopday.currentRowChanged.connect(self.change_lop)
         self.stackedWidget.setCurrentIndex(0)
 
-        # Sự kiện đổi học kỳ
         self.chonhocki.currentTextChanged.connect(
             lambda _: self.show_scores(self.chonhocki.currentText())
         )
 
-        # Load dữ liệu ban đầu
-        print("Loading initial scores for semester: Học kỳ 1")
         self.show_scores("Học kỳ 1")
 
+        self.save_btn.clicked.connect(self.save_data)
+
     def change_lop(self, index):
-        print(f"Class changed to index: {index}")
         self.stackedWidget.setCurrentIndex(index)
         self.show_scores(self.chonhocki.currentText())
 
     def get_student_data(self, class_name, hk):
-        print(f"Getting student data for class: {class_name}, semester: {hk}")
         if hk == "Học kỳ 1":
             hk = "semester_1"
         elif hk == "Học kỳ 2":
             hk = "semester_2"
         path = f"Data/Students/{class_name}.json"
-        print(f"Student data path: {path}")
         self.student_manager = StudentManager(path, class_name)
-        data = self.student_manager.load_student_to_Window(hk, self.mon_day)
-        print(f"Loaded student data: {data}")
+        data = self.student_manager.load_student_to_Teacher_Window(hk, self.mon_day)
         return data
 
+    def safe_get_list_item(self, data_list, index):
+        """
+        Safely retrieves an item from a list at the specified index.
+        
+        This method provides a safe way to access list elements by:
+        1. Checking if the input is actually a list
+        2. Verifying the index is within bounds
+        3. Ensuring the item exists and is not empty
+        4. Converting the item to a string for consistent output
+        
+        Args:
+            data_list: The list to extract an item from
+            index: The position of the item to retrieve
+            
+        Returns:
+            str: The item as a string if valid, empty string otherwise
+        """
+        # Check if data_list is a valid list and index is within bounds
+        if isinstance(data_list, list) and len(data_list) > index:
+            item = data_list[index]
+            # Verify item exists and is not empty after converting to string
+            if item is not None and str(item).strip():
+                return str(item)
+        return ""
+
     def show_scores(self, hk):
-        # biến đổi kh
         if hk == "Học Kì 1":
             hk = "semester_1"
         elif hk == "Học Kì 2":
             hk = "semester_2"
 
         current_index = self.stackedWidget.currentIndex()
-        print(f"Showing scores for semester: {hk}, current_index: {current_index}")
         if current_index < 0 or current_index >= len(self.lop_day):
-            print("Invalid class index, skipping show_scores.")
             return
+
         ten_lop = self.lop_day[current_index]
-        print(f"Current class: {ten_lop}")
         data = self.get_student_data(ten_lop, hk)
 
         model = self.model_dict[ten_lop]
-        model.removeRows(0, model.rowCount())
+        model.clear()
 
-        # Ensure we are updating the correct QTableView for the current class
+        headers = ["Họ tên", "Điểm miệng cột 1", "Điểm miệng cột 2", "Điểm 15p cột 1", "Điểm 15p cột 2", "Điểm 1 tiết cột 1", "Điểm 1 tiết cột 2", "Điểm Giữa kỳ", "Điểm Cuối kỳ"]
+        model.setHorizontalHeaderLabels(headers)
+
+        for idx, student in enumerate(data):
+            values = [
+                student.get('name', ''),
+                self.safe_get_list_item(student.get('oral_scores', []), 0),
+                self.safe_get_list_item(student.get('oral_scores', []), 1),
+                self.safe_get_list_item(student.get('quiz_15min', []), 0),
+                self.safe_get_list_item(student.get('quiz_15min', []), 1),
+                self.safe_get_list_item(student.get('test_1period', []), 0),
+                self.safe_get_list_item(student.get('test_1period', []), 1),
+                str(student.get('midterm', '')) if student.get('midterm') is not None else "",
+                str(student.get('final', '')) if student.get('final') is not None else ""
+            ]
+
+            row_items = []
+            for val in values:
+                item = QStandardItem(val)
+                item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+                row_items.append(item)
+
+            model.appendRow(row_items)
+            model.setVerticalHeaderItem(idx, QStandardItem(str(idx + 1)))
+
         bang = self.bang_dict[ten_lop]
-        bang.setModel(model)  # Make sure the model is set for the correct table
+        bang.setModel(model)
+        bang.resizeColumnsToContents()
+        bang.resizeRowsToContents()
 
-        for student in data:
-            print(f"Adding student to table: {student}")
-            model.appendRow([
-            QStandardItem(student.get('name', '')),
-            QStandardItem(str(student.get('oral_scores', ''))),
-            QStandardItem(str(student.get('quiz_15min', ''))),
-            QStandardItem(str(student.get('test_1period', ''))),
-            QStandardItem(str(student.get('midterm', ''))),
-            QStandardItem(str(student.get('final', '')))
-            ])
+    def save_data(self):
+        current_page_index = self.stackedWidget.currentIndex()
+        if current_page_index < 0 or current_page_index >= len(self.lop_day):
+            return
+
+        current_lop = self.lop_day[current_page_index]
+        current_semester = self.chonhocki.currentText()
+        # xuwr lý tên học kỳ
+        if current_semester == "Học Kì 1":
+            current_semester = "semester_1"
+        elif current_semester == "Học Kì 2":
+            current_semester = "semester_2"
+
+
+        #lấy dữ liêu từ bảng hiện tại
+        model = self.model_dict[current_lop]
+
+        data = []
+        for row in range(model.rowCount()):
+            student_data ={
+                'name': model.item(row, 0).text(),
+                'scores': {
+                    'oral_scores': [
+                        float(model.item(row, 1).text()) if model.item(row, 1).text() else None,
+                        float(model.item(row, 2).text()) if model.item(row, 2).text() else None
+                    ],
+                    'quiz_15min': [
+                        float(model.item(row, 3).text()) if model.item(row, 3).text() else None,
+                        float(model.item(row, 4).text()) if model.item(row, 4).text() else None
+                    ],
+                    'test_1period': [
+                        float(model.item(row, 5).text()) if model.item(row, 5).text() else None,
+                        float(model.item(row, 6).text()) if model.item(row, 6).text() else None
+                    ],
+                    'midterm': float(model.item(row, 7).text()) if model.item(row, 7).text() else None,
+                    'final': float(model.item(row, 8).text()) if model.item(row, 8).text() else None
+                }
+            }
+            data.append(student_data)
+        
+        path = f"Data/Students/{current_lop}.json"
+        self.student_manager = StudentManager(path, current_lop)
+        self.student_manager.save_scores(self.mon_day, current_semester, data)
+        QMessageBox.information(self, "Lưu thành công", "Dữ liệu đã được lưu thành công.")

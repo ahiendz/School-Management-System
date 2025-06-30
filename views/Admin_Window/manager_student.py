@@ -5,9 +5,27 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from PyQt6 import uic
-import pandas as pd
 from models import student
 from widgets import dialog_add_student
+
+DEFAULT_SCORES = {
+    "Toán": {
+        "semester_1": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+        "semester_2": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+    },
+    "Văn": {
+        "semester_1": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+        "semester_2": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+    },
+    "KHTN": {
+        "semester_1": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+        "semester_2": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+    },
+    "Anh": {
+        "semester_1": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+        "semester_2": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+    },
+}
 
 class ManagerStudentsWindow(QMainWindow):
     def __init__(self, class_name):
@@ -25,10 +43,10 @@ class ManagerStudentsWindow(QMainWindow):
 
     def setUpUi(self):
         self.back_btn.clicked.connect(self.close)
-        self.import_btn.clicked.connect(self.import_teacher)
+        self.import_btn.clicked.connect(self.import_student)
         self.add_btn.clicked.connect(self.add_student)
         self.remove_btn.clicked.connect(self.remove_student)
-        self.save_btn.clicked.connect(lambda: self.studenmanager.save_from_table_model(self.model))
+        self.save_btn.clicked.connect(lambda: self.save_student(self.model))
         self.export_btn.clicked.connect(self.export_student)
 
         # TableView setup
@@ -54,27 +72,6 @@ class ManagerStudentsWindow(QMainWindow):
                 QStandardItem(student_obj.parent_account),
                 QStandardItem(student_obj.parent_password),
             ])
-
-    def save_data(self):
-        students = []
-
-        for row in range(self.model.rowCount()):
-            student = {
-                "id": self.model.item(row, 0).text(),
-                "name": self.model.item(row, 1).text(),
-                "gender": self.model.item(row, 2).text(),
-                "dob": self.model.item(row, 3).text(),
-                "parent_account": self.model.item(row, 4).text(),
-                "parent_password": self.model.item(row, 5).text(),
-                "class": self.class_name,
-                "scores": {},
-                "comment": {}
-            }
-            students.append(student)
-
-        from Data import data_io
-        data_io.write_json_data(students, self.json_path)
-        QMessageBox.information(self, "Đã lưu", f"Đã lưu {len(students)} học sinh vào lớp {self.class_name}.")
 
     def add_student(self):
         dialog = dialog_add_student.Dialog_Them_Student()
@@ -105,7 +102,7 @@ class ManagerStudentsWindow(QMainWindow):
 
         QMessageBox.information(self, "Đã xóa", f"Đã xóa {len(removed_ids)} học sinh.")
 
-    def import_teacher(self):
+    def import_student(self):
         file_path, _ = QFileDialog.getOpenFileName(
             self,
             "Chọn file Excel",
@@ -115,8 +112,42 @@ class ManagerStudentsWindow(QMainWindow):
 
         if file_path:
             # gọi hàm xử lý file Excel tại đây
-            self.studenmanager.import_from_excel(file_path)
+            self.studenmanager.import_from_excel_ADMINW(file_path)
             self.load_data_to_ui()  # cập nhật lại bảng sau khi import
 
     def export_student(self):
-        self.studenmanager.export_to_excel()
+        export_folder = os.path.abspath(f"Data/Export")
+        os.makedirs(export_folder, exist_ok=True)
+
+        default_name = f"{self.class_name}_Student_List.xlsx"
+
+        file_path, _ = QFileDialog.getSaveFileName(
+            parent=None,
+            caption="Export File",
+            directory=os.path.join(export_folder, default_name),
+            filter="Excel Files (*.xlsx)"
+        )
+
+        if not file_path:
+            return
+        self.studenmanager.export_to_excel_ADMINW(file_path)
+
+    def save_student(self, model: QStandardItemModel):
+        data = []
+        for row in range(model.rowCount()):
+            item = {
+                "id": model.item(row, 0).text(),
+                "name": model.item(row, 1).text(),
+                "gender": model.item(row, 2).text(),
+                "dob": model.item(row, 3).text(),
+                "parent_account": model.item(row, 4).text(),
+                "parent_password": model.item(row, 5).text(),
+                "class": self.class_name,
+                "scores": DEFAULT_SCORES.copy(),
+                "comment": {}
+            }
+            data.append(item)
+
+        self.studenmanager.students_dict = data
+        self.studenmanager.save_student_info(data)
+        QMessageBox.information(self, "Lưu thành công", "Dữ liệu đã được lưu thành công.")

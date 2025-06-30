@@ -1,9 +1,25 @@
 from Data import data_io
-import random, pandas, openpyxl, os
+import random, pandas, os
 from openpyxl import Workbook
-from widgets import dialog_add_student
-from PyQt6.QtGui import QStandardItemModel
-from PyQt6.QtWidgets import QFileDialog
+
+DEFAULT_SCORES = {
+    "Toán": {
+        "semester_1": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+        "semester_2": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+    },
+    "Văn": {
+        "semester_1": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+        "semester_2": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+    },
+    "KHTN": {
+        "semester_1": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+        "semester_2": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+    },
+    "Anh": {
+        "semester_1": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+        "semester_2": {"oral_scores": [], "quiz_15min": [], "test_1period": [], "midterm": None, "final": None, "average": None},
+    },
+}
 
 class Student:
     def __init__(self, id, name, gender, dob, parent_account, parent_password, class_name, scores=None, comment=None):
@@ -14,7 +30,7 @@ class Student:
         self.parent_account = parent_account
         self.parent_password = parent_password
         self.class_name = class_name
-        self.scores = scores if scores is not None else {}
+        self.scores = scores if scores is not None else DEFAULT_SCORES.copy()
         self.comment = comment if comment is not None else {}
 
     def to_dict(self):
@@ -30,46 +46,96 @@ class Student:
             "comment": self.comment
         }
 
+    # tính điểm trung bình cho một môn học trong học kỳ cụ thể
+    def tinh_diem_trung_binh(self, mon_day, hk):
+        if mon_day not in self.scores or hk not in self.scores[mon_day]:
+            return None
+
+        diem = self.scores[mon_day][hk]
+        if diem is None:
+            return None
+
+        oral_scores = diem.get("oral_scores", [])
+        quiz_15min = diem.get("quiz_15min", [])
+        test_1period = diem.get("test_1period", [])
+        midterm = diem.get("midterm")
+        final = diem.get("final")
+
+        # Kiểm tra xem có bất kỳ điểm nào bị trống không
+        # Kiểm tra oral_scores (cần 2 điểm)
+        if len(oral_scores) < 2 or any(score is None or str(score).strip() == "" for score in oral_scores):
+            return None
+        
+        # Kiểm tra quiz_15min (cần 2 điểm)
+        if len(quiz_15min) < 2 or any(score is None or str(score).strip() == "" for score in quiz_15min):
+            return None
+        
+        # Kiểm tra test_1period (cần 2 điểm)
+        if len(test_1period) < 2 or any(score is None or str(score).strip() == "" for score in test_1period):
+            return None
+        
+        # Kiểm tra midterm và final
+        if midterm is None or str(midterm).strip() == "":
+            return None
+        if final is None or str(final).strip() == "":
+            return None
+
+        # Nếu tất cả điểm đều có thì mới tính trung bình
+        total_scores = (
+            sum(float(x) for x in oral_scores) +
+            sum(float(x) for x in quiz_15min) +
+            sum(float(x) for x in test_1period) +
+            float(midterm) +
+            float(final)
+        )
+
+        num_scores = len(oral_scores) + len(quiz_15min) + len(test_1period) + 2  # +2 cho midterm và final
+
+        print(total_scores, num_scores)
+        return total_scores / num_scores if num_scores > 0 else None
+    
 class StudentManager:
     def __init__(self, data_path, class_name):
         self.json_data_path = data_path
         self.curr_lop = class_name
         self.students = []
         self.students_dict = self.load_from_file()
-
-        # # thuộc tính để biết là teacher đang dạy môn nào để mà nhâp
-        # self.mon_day = mon_day
-
         self.load_student()
 
     def load_from_file(self):
         data = data_io.load_json_data(self.json_data_path)
         return data
 
-    def save_to_file(self,data):
+    def save_student_info(self, data):
         data_io.write_json_data(data, self.json_data_path)
 
-    def save_from_table_model(self, model: QStandardItemModel):
-        data = []
-        for row in range(model.rowCount()):
-            item = {
-                "id": model.item(row, 0).text(),
-                "name": model.item(row, 1).text(),
-                "gender": model.item(row, 2).text(),
-                "dob": model.item(row, 3).text(),
-                "parent_account": model.item(row, 4).text(),
-                "parent_password": model.item(row, 5).text(),
-                "class": self.curr_lop,
-                "scores": {},
-                "comment": {}
-            }
-            data.append(item)
+    def save_scores(self, mon_day, hk, data):
+        if not data:
+            return
 
-        self.students_dict = data
-        self.save_to_file(data)
+        students_dict = []
+        for student in data:
+            student_name = student.get("name")
+            student_item = self.get_student_by_name(student_name)
+            if student_item is not None:
+                student_scores = student.get("scores", {})
+                # thực hiện tính toán điểm trung bình nếu đủ điều kiện
+                if student_scores:
+                    student_item.scores[mon_day][hk] = student_scores
+                    average_score = student_item.tinh_diem_trung_binh(mon_day, hk)
+                    if average_score is not None:
+                        student_scores['average'] = average_score
+                    else:
+                        student_scores['average'] = None
+                students_dict.append(student_item.to_dict())
+
+        self.students_dict = students_dict
+        self.save_student_info(self.students_dict)
+                
 
     def load_student(self):
         for teacher in self.students_dict:
+            scores = teacher.get("scores", DEFAULT_SCORES.copy())
             student = Student(
                 id=teacher['id'],
                 name=teacher["name"],
@@ -78,15 +144,15 @@ class StudentManager:
                 parent_account=teacher["parent_account"],
                 parent_password=teacher["parent_password"],
                 class_name=teacher["class"],
-                scores=teacher.get("scores", {}),
+                scores=scores,
                 comment=teacher.get("comment", {})
-        )
+            )
             self.students.append(student)
 
     def add_student(self, student_dict):
         def generate_random_id():
             return f"MS{random.randint(10000, 99999)}"
-        
+
         student_id = generate_random_id()
         parent_account = f"phhs_{student_id}"
         parent_password = f"{parent_account}_1234"
@@ -98,66 +164,52 @@ class StudentManager:
             dob=student_dict["dob"],
             parent_account=parent_account,
             parent_password=parent_password,
-            class_name= self.curr_lop,
-            scores={},
-            comment={}
+            class_name=self.curr_lop
         )
 
         self.students.append(new_student)
         new_student = new_student.to_dict()
         self.students_dict.append(new_student)
-        self.save_to_file(self.students_dict)
+        self.save_student_info(self.students_dict)
 
     def remove_students_by_ids(self, id_list: list):
         self.students = [s for s in self.students if s.id not in id_list]
         self.students_dict = [s for s in self.students_dict if s["id"] not in id_list]
-        self.save_to_file(self.students_dict)
+        self.save_student_info(self.students_dict)
 
-    def get_student_by_id(self, student_id):
+    def get_student_by_name(self, student_name):
         for student in self.students:
-            if student.id == student_id:
+            if student.name == student_name:
                 return student
         return None
 
-    def import_from_excel(self,path):
+    def import_from_excel_ADMINW(self, path):
         df = pandas.read_excel(path)
 
         self.students.clear()
         self.students_dict.clear()
         for _, row in df.iterrows():
             student_data = Student(
-                id = row["id"],
-                name= row["name"],
-                gender= row["gender"],
+                id=row["id"],
+                name=row["name"],
+                gender=row["gender"],
                 dob=row["dob"],
-                parent_account= row["parent_account"],
-                parent_password= row["parent_password"],
+                parent_account=row["parent_account"],
+                parent_password=row["parent_password"],
                 class_name=self.curr_lop
             )
             self.students.append(student_data)
             student_data = student_data.to_dict()
             self.students_dict.append(student_data)
-        
-        self.save_to_file(self.students_dict)
 
-    def export_to_excel(self):
+        self.save_student_info(self.students_dict)
+
+    def import_from_excel_TEACHERNW():
+        pass
+
+    def export_to_excel_ADMINW(self, file_path=None):
         data = self.students_dict
-
-        export_folder = os.path.abspath(f"Data/Export")
-        os.makedirs(export_folder, exist_ok=True)
-
-        default_name = f"{self.curr_lop}_Student_List.xlsx"
-
-        file_path, _ = QFileDialog.getSaveFileName(
-            parent=None,
-            caption="Export File",
-            directory=os.path.join(export_folder, default_name),
-            filter="Excel Files (*.xlsx)"
-        )
-
-        if not file_path:
-            return
-
+        
         wb = Workbook()
         ws = wb.active
         ws.title = "Students"
@@ -171,10 +223,10 @@ class StudentManager:
 
         wb.save(file_path)
 
-        # There are student data
-        a = ["id", "name", "gender", "dob", "parent_account", "parent_password", "class"]
+    def export_to_excel_TEACHERNW():
+        pass
 
-    def load_student_to_Window(self, hk, mon_day):
+    def load_student_to_Teacher_Window(self, hk, mon_day):
         data = []
         for student in self.students:
             student_name = student.name
@@ -185,5 +237,5 @@ class StudentManager:
                 if diem_theo_hk is not None:
                     diem_theo_hk['name'] = student_name
                     data.append(diem_theo_hk)
-        
+
         return data
