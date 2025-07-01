@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from PyQt6 import uic
-from models import student
+from Service.student_service import StudentService
 from widgets import dialog_add_student
 
 DEFAULT_SCORES = {
@@ -32,11 +32,12 @@ class ManagerStudentsWindow(QMainWindow):
         super().__init__()
         uic.loadUi("Ui/Manager_Stundets.ui", self)
 
+
         self.class_name = class_name
         self.json_path = f"Data/Students/{self.class_name}.json"
         self.students = []
 
-        self.studenmanager = student.StudentManager(data_path=self.json_path, class_name=self.class_name)
+        self.student_service = StudentService(class_name=self.class_name, data_path=self.json_path)
 
         self.setUpUi()
         self.show()
@@ -60,10 +61,10 @@ class ManagerStudentsWindow(QMainWindow):
         self.load_data_to_ui()
 
     def load_data_to_ui(self):
-
+        students = self.student_service.load_student_info_ADMIN_WINDOW()
         self.model.removeRows(0, self.model.rowCount())
 
-        for student_obj in self.studenmanager.students:
+        for student_obj in students:
             self.model.appendRow([
                 QStandardItem(student_obj.id),
                 QStandardItem(student_obj.name),
@@ -77,7 +78,7 @@ class ManagerStudentsWindow(QMainWindow):
         dialog = dialog_add_student.Dialog_Them_Student()
         if dialog.exec():
             student_data = dialog.return_input_fields()
-            self.studenmanager.add_student(student_data)
+            self.student_service.add_student_to_class_ADMIN_WINDOW(student_data)
             self.load_data_to_ui()
 
     def remove_student(self):
@@ -98,7 +99,7 @@ class ManagerStudentsWindow(QMainWindow):
             self.model.removeRow(index.row())
 
         # Gọi model để xóa trong danh sách và JSON
-        self.studenmanager.remove_students_by_ids(removed_ids)
+        self.student_service.remove_student_from_class_ADMIN_WINDOW(removed_ids)
 
         QMessageBox.information(self, "Đã xóa", f"Đã xóa {len(removed_ids)} học sinh.")
 
@@ -112,7 +113,7 @@ class ManagerStudentsWindow(QMainWindow):
 
         if file_path:
             # gọi hàm xử lý file Excel tại đây
-            self.studenmanager.import_from_excel_ADMINW(file_path)
+            self.student_service.import_students_from_file_ADMIN_WINDOW(file_path)
             self.load_data_to_ui()  # cập nhật lại bảng sau khi import
 
     def export_student(self):
@@ -130,7 +131,7 @@ class ManagerStudentsWindow(QMainWindow):
 
         if not file_path:
             return
-        self.studenmanager.export_to_excel_ADMINW(file_path)
+        self.student_service.export_students_to_file_ADMIN_WINDOW(file_path)
 
     def save_student(self, model: QStandardItemModel):
         data = []
@@ -148,6 +149,5 @@ class ManagerStudentsWindow(QMainWindow):
             }
             data.append(item)
 
-        self.studenmanager.students_dict = data
-        self.studenmanager.save_student_info(data)
+        self.student_service.save_students_to_json_ADMIN_WINDOW(data)
         QMessageBox.information(self, "Lưu thành công", "Dữ liệu đã được lưu thành công.")

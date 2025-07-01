@@ -1,11 +1,14 @@
 from PyQt6.QtWidgets import (
-    QMainWindow, QVBoxLayout, QListWidgetItem, QWidget, QTableView,
-    QAbstractItemView, QMessageBox
+    QMainWindow, QVBoxLayout, QListWidgetItem, QWidget, QTableView, QFileDialog,
+    QAbstractItemView, QMessageBox, QInputDialog
 )
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from PyQt6.QtCore import Qt
 from PyQt6 import uic
-from models.student import StudentManager
+from Service.student_service import StudentService
+from widgets.DialogComment import DialogComment
+from widgets.comment_delegate import CommentButtonDelegate  # nếu tách file
+import os
 
 class TeacherWindow(QMainWindow):
     def __init__(self, teacher_dict):
@@ -15,7 +18,7 @@ class TeacherWindow(QMainWindow):
         self.teacher_dict_data = teacher_dict
         self.lop_day = [str(item) for item in self.teacher_dict_data['lop day']]
         self.mon_day = self.teacher_dict_data['mon day']
-        self.semester = "semester_1"  # mặc định
+        self.semester = "semester_1"
 
         self.bang_dict = {}
         self.model_dict = {}
@@ -40,7 +43,10 @@ class TeacherWindow(QMainWindow):
 
             bang = QTableView()
             bang.setEditTriggers(QAbstractItemView.EditTrigger.DoubleClicked)
+            bang.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+            bang.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
             bang.verticalHeader().setVisible(True)
+            bang.verticalHeader().setSectionsClickable(True)
             bang.horizontalHeader().setVisible(True)
             layout.addWidget(bang)
 
@@ -60,6 +66,8 @@ class TeacherWindow(QMainWindow):
         self.show_scores("Học kỳ 1")
 
         self.save_btn.clicked.connect(self.save_data)
+        self.import_btn.clicked.connect(self.import_student_scores)
+        self.export_btn.clicked.connect(self.export_student_scores)
 
     def change_lop(self, index):
         self.stackedWidget.setCurrentIndex(index)
@@ -71,31 +79,13 @@ class TeacherWindow(QMainWindow):
         elif hk == "Học kỳ 2":
             hk = "semester_2"
         path = f"Data/Students/{class_name}.json"
-        self.student_manager = StudentManager(path, class_name)
-        data = self.student_manager.load_student_to_Teacher_Window(hk, self.mon_day)
+        self.studentservice = StudentService(path, class_name)
+        data = self.studentservice.load_student_scores_TEACHER_WINDOW(hk, self.mon_day)
         return data
 
     def safe_get_list_item(self, data_list, index):
-        """
-        Safely retrieves an item from a list at the specified index.
-        
-        This method provides a safe way to access list elements by:
-        1. Checking if the input is actually a list
-        2. Verifying the index is within bounds
-        3. Ensuring the item exists and is not empty
-        4. Converting the item to a string for consistent output
-        
-        Args:
-            data_list: The list to extract an item from
-            index: The position of the item to retrieve
-            
-        Returns:
-            str: The item as a string if valid, empty string otherwise
-        """
-        # Check if data_list is a valid list and index is within bounds
         if isinstance(data_list, list) and len(data_list) > index:
             item = data_list[index]
-            # Verify item exists and is not empty after converting to string
             if item is not None and str(item).strip():
                 return str(item)
         return ""
@@ -116,7 +106,7 @@ class TeacherWindow(QMainWindow):
         model = self.model_dict[ten_lop]
         model.clear()
 
-        headers = ["Họ tên", "Điểm miệng cột 1", "Điểm miệng cột 2", "Điểm 15p cột 1", "Điểm 15p cột 2", "Điểm 1 tiết cột 1", "Điểm 1 tiết cột 2", "Điểm Giữa kỳ", "Điểm Cuối kỳ"]
+        headers = ["Họ tên", "Điểm miệng cột 1", "Điểm miệng cột 2", "Điểm 15p cột 1", "Điểm 15p cột 2", "Điểm 1 tiết cột 1", "Điểm 1 tiết cột 2", "Điểm Giữa kỳ", "Điểm Cuối kỳ", "Nhận xét"]
         model.setHorizontalHeaderLabels(headers)
 
         for idx, student in enumerate(data):
@@ -138,13 +128,44 @@ class TeacherWindow(QMainWindow):
                 item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
                 row_items.append(item)
 
+            comment_btn = QStandardItem("📝")
+            comment_btn.setEditable(False)
+            comment_btn.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+            row_items.append(comment_btn)
+
             model.appendRow(row_items)
-            model.setVerticalHeaderItem(idx, QStandardItem(str(idx + 1)))
 
         bang = self.bang_dict[ten_lop]
         bang.setModel(model)
+        delegate = CommentButtonDelegate(bang, lambda index: self.open_dialog_comment(index, ten_lop))
+        bang.setItemDelegateForColumn(9, delegate)
         bang.resizeColumnsToContents()
         bang.resizeRowsToContents()
+        bang.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        bang.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        bang.verticalHeader().setSectionsClickable(True)
+
+    def open_dialog_comment(self, index, ten_lop):  
+        model = self.model_dict[ten_lop]
+        name = model.item(index.row(), 0).text()
+
+        student = self.studentservice.get_student_name_TEACHER_WINDOW(name)
+        if student:
+            comment = student.comment[self.mon_day]
+        else:
+            comment = ""
+
+        hocki = self.chonhocki.currentText()
+        if hocki == "Học Kì 1":
+            hk = "semester_1"
+        elif hocki == "Học Kì 2":
+            hk = "semester_2"
+        scores_dict = student.scores[self.mon_day][hk]
+
+        dialog = DialogComment(student_name=name, hocki=hocki, old_comment=comment, scores=scores_dict)
+        if dialog.exec():
+            new_comment = dialog.get_comment()
+            self.studentservice.save_student_comment_TEACHER_WINDOW(student_name=name, mon_day=self.mon_day, comment=new_comment)
 
     def save_data(self):
         current_page_index = self.stackedWidget.currentIndex()
@@ -187,6 +208,55 @@ class TeacherWindow(QMainWindow):
             data.append(student_data)
         
         path = f"Data/Students/{current_lop}.json"
-        self.student_manager = StudentManager(path, current_lop)
-        self.student_manager.save_scores(self.mon_day, current_semester, data)
+        self.studentservice = StudentService(path, current_lop)
+        self.studentservice.save_scores_TEACHER_WINDOW(data=data, hk=current_semester, mon_day=self.mon_day)
         QMessageBox.information(self, "Lưu thành công", "Dữ liệu đã được lưu thành công.")
+
+    def import_student_scores(self):
+        """
+        Import student scores from an Excel file.
+        """
+        file_path, _ = QFileDialog.getOpenFileName(
+            self,
+            "Chọn file Excel",
+            "./Data/Import",
+            "Excel Files (*.xlsx *.xls)"
+        )
+
+        if file_path:
+            current_page = self.stackedWidget.currentIndex()
+            current_class = self.lop_day[current_page]
+            data_path = f"Data/Students/{current_class}.json"
+            
+            semester = self.chonhocki.currentText()
+            self.studentservice = StudentService(data_path, current_class)
+            print("Importing scores from Excel file... with file path:", file_path, "and mon_day:", self.mon_day, "and semester:", semester)
+            self.studentservice.import_scores_from_excel_TEACHER_WINDOW(file_path=file_path, mon_day=self.mon_day, semester=semester)
+            self.show_scores(self.chonhocki.currentText())
+
+    def export_student_scores(self):
+        export_folder = os.path.abspath(f"Data/Export")
+        os.makedirs(export_folder, exist_ok=True)
+
+        current_lop = self.stackedWidget.currentIndex()
+        if current_lop < 0 or current_lop >= len(self.lop_day):
+            QMessageBox.warning(self, "Lỗi", "Không có lớp học nào được chọn.")
+            return
+        default_name = f"{self.lop_day[current_lop]}_Student_List.xlsx"
+
+        file_path, _ = QFileDialog.getSaveFileName(
+            parent=None,
+            caption="Export File",
+            directory=os.path.join(export_folder, default_name),
+            filter="Excel Files (*.xlsx)"
+        )
+
+        if not file_path:
+            return
+        
+        hk = self.chonhocki.currentText()
+        if hk == "Học Kì 1":
+            hk = "semester_1"
+        elif hk == "Học Kì 2":
+            hk = "semester_2"
+        self.studentservice.export_scores_to_excel_TEACHER_WINDOW(file_path=file_path, mon_day=self.mon_day, semester=hk)
