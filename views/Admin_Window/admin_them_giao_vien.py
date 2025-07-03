@@ -9,7 +9,7 @@ from views.Admin_Window import admin_them_lop as ad
 class Admin_Them_Giao_Vien(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi(r"Assets\Ui\admin_themgiaovien.ui", self)
+        uic.loadUi(r"Assets\Ui\admin_add_teacher.ui", self)
         
         self.setUpUi()
 

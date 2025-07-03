@@ -14,7 +14,7 @@ from views.Admin_Window import manager_student
 class Admin_Them_Lop(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi(r"Assets\Ui\admin_themlop.ui", self)
+        uic.loadUi(r"Assets\Ui\admin_add_class.ui", self)
         
         self.setUpUi()
 

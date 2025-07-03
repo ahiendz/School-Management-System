@@ -109,6 +109,9 @@ QPushButton:hover {
     </item>
     <item>
      <widget class="QTableView" name="tableStudents">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="alternatingRowColors">
        <bool>true</bool>
       </property>

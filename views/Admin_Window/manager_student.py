@@ -30,7 +30,7 @@ DEFAULT_SCORES = {
 class ManagerStudentsWindow(QMainWindow):
     def __init__(self, class_name):
         super().__init__()
-        uic.loadUi("Assets/Ui/Manager_Stundets.ui", self)
+        uic.loadUi(r"Assets\Ui\Manager_Stundets.ui", self)
 
 
         self.class_name = class_name
@@ -49,6 +49,8 @@ class ManagerStudentsWindow(QMainWindow):
         self.btnRemove.clicked.connect(self.remove_student)
         self.btnSave.clicked.connect(lambda: self.save_student(self.model))
         self.btnExport.clicked.connect(self.export_student)
+
+        self.labelClassName.setText(f"<b>📚 Đang quản lý học sinh lớp: {self.class_name}</b>")
 
         # tableStudents setup
         self.tableStudents.setEditTriggers(QAbstractItemView.EditTrigger.DoubleClicked)

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AdminAddClassWindow</class>
+ <widget class="QMainWindow" name="AdminAddClassWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Admin - Thêm lớp</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+QWidget {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 14px;
+}
+QGroupBox {
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #D0D0D0;
+    border-radius: 8px;
+    margin-top: 10px;
+    padding-top: 10px; /* khoảng cách giữa title và các nội dung bên trong */
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    padding: 0 5px;
+    margin-top: -5px; /* kéo title lên */
+    left: 10px;
+    color: #005A9E;
+}
+QPushButton {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+}
+QPushButton:hover {
+    background-color: #0056b3;
+}
+   </string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="mainLayout">
+    <item>
+     <layout class="QVBoxLayout" name="sidebarLayout">
+      <item>
+       <widget class="QGroupBox" name="groupBoxManage">
+        <property name="title">
+         <string>Quản Lí 🏫</string>
+        </property>
+        <layout class="QVBoxLayout" name="layoutManage">
+         <item>
+          <widget class="QPushButton" name="btnAddClass">
+           <property name="text">
+            <string>➕ Thêm lớp	</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnAddTeacher">
+           <property name="text">
+            <string>👨‍🏫 Thêm giáo viên	</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBoxKhoi">
+        <property name="title">
+         <string>Chọn khối</string>
+        </property>
+        <layout class="QVBoxLayout" name="layoutKhoi">
+         <item>
+          <widget class="QPushButton" name="btnKhoi6">
+           <property name="text">
+            <string>Khối 6</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnKhoi7">
+           <property name="text">
+            <string>Khối 7</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnKhoi8">
+           <property name="text">
+            <string>Khối 8</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnKhoi9">
+           <property name="text">
+            <string>Khối 9</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnLogout">
+        <property name="text">
+         <string>🚪 Đăng Xuất	</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="contentLayout">
+      <item>
+       <layout class="QHBoxLayout" name="toolbarLayout">
+        <item>
+         <widget class="QPushButton" name="btnAdd">
+          <property name="text">
+           <string>➕ Thêm	 Lớp</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnEdit">
+          <property name="text">
+           <string>📝 Sửa	Lớp</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnRemove">
+          <property name="text">
+           <string>❌ Xoá	Lớp</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnView">
+          <property name="text">
+           <string>👁 Xem	Lớp</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnManagerStudent">
+          <property name="text">
+           <string>🎓 Quản lý học sinh	</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QStackedWidget" name="stackedWidget">
+        <property name="styleSheet">
+         <string notr="true">QListWidget {
+    font-size: 16px;
+    padding: 6px;
+    spacing: 6px; /* khoảng cách giữa các item */
+}
+
+QListWidget::item {
+    padding: 10px 12px;
+    margin: 6px;
+    border: 1px solid #3a3a3a;
+    border-radius: 6px;
+    background-color: #1e1e1e;
+    color: white;
+}
+
+QListWidget::item:selected {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+}
+</string>
+        </property>
+        <widget class="QListWidget" name="listWidget_Khoi6"/>
+        <widget class="QListWidget" name="listWidget_Khoi7"/>
+        <widget class="QListWidget" name="listWidget_Khoi8"/>
+        <widget class="QListWidget" name="listWidget_Khoi9"/>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
