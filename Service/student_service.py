@@ -1,4 +1,7 @@
 from models.student import StudentManager
+from Utils.score_utils import tinh_diem_trung_binh_nam_theo_mon, xep_loai_hoc_sinh
+from reports.parent_chart_generator import save_parent_chart_image
+
 # from models.classroom import ClassroomManager
 
 class StudentService:
@@ -42,7 +45,7 @@ class StudentService:
         student_manager = StudentManager(self.data_path, self.class_name)
         return student_manager.get_scores_for_teacher_view(hk, mon_day)
     
-    def get_student_name_TEACHER_WINDOW(self, name):
+    def get_student_by_name_TEACHER_WINDOW(self, name):
         student_manager = StudentManager(self.data_path, self.class_name)
         return student_manager.get_student_by_name(name)
 
@@ -65,3 +68,22 @@ class StudentService:
         student_manager = StudentManager(self.data_path, self.class_name)
         student_manager.save_student_comment(student_name=student_name, mon_day=mon_day, comment=comment)
         # Sau khi lưu bình luận, có thể cập nhật classroom nếu cần
+
+    # theo quyền dc call là login
+    def get_student_data(self):
+        student_manager = StudentManager(self.data_path, self.class_name)
+        return student_manager.students
+    
+    # trong Parent Window
+    def get_student_scores(self, student_name):
+        student_manager = StudentManager(self.data_path, self.class_name)
+        return student_manager.get_student_scores(student_name)
+    
+    def tinh_diem_trung_binh_nam(self, hk1, hk2):
+        return tinh_diem_trung_binh_nam_theo_mon(hk1=hk1, hk2=hk2)
+    
+    def tao_bieu_do_cot(self,avg_scores, output_path):
+        save_parent_chart_image(avg_scores=avg_scores, output_path=output_path)
+
+    def xep_loai_hoc_sinh(self, year_scores):
+        return xep_loai_hoc_sinh(year_scores)

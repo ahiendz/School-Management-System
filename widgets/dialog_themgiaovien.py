@@ -1,19 +1,19 @@
 from PyQt6.QtWidgets import QDialog
 from PyQt6 import uic
-from models import classroom as CL
+from Service.classroom_service import ClassroomService
 
 class Dialog_Them_Giao_Vien(QDialog):
     def __init__(self):
         super().__init__()
-        uic.loadUi(r"Ui\Dialog_them_giaovien.ui", self)
+        uic.loadUi(r"Assets\Ui\Dialog_them_giaovien.ui", self)
         
         self.setUpUi()
         
         self.show()
     
     def setUpUi(self):
-        self.classroom = CL.ClassroomManager()
-        classroom = self.classroom.get_available_classroom()
+        self.classroom_service = ClassroomService()
+        classroom = self.classroom_service.get_available_classrooms()
         
         self.gvcn.addItems(classroom)
 

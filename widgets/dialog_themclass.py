@@ -1,19 +1,19 @@
 from PyQt6.QtWidgets import QDialog
 from PyQt6 import uic
-from models import teacher
+from Service.teacher_service import TeacherService
 
 class Dialog_Them_Class(QDialog):
     def __init__(self):
         super().__init__()
-        uic.loadUi(r"Ui\Dialog_themlop.ui", self)
+        uic.loadUi(r"Assets\Ui\Dialog_themlop.ui", self)
         
         self.setUpUi()
         
         self.show()
     
     def setUpUi(self):
-        self.teacher = teacher.TeacherManager()
-        teachers = self.teacher.get_available_teachers()
+        self.teacher_service = TeacherService()
+        teachers = self.teacher_service.get_available_teachers()
         
         self.gvcn.addItems(teachers["gvcn"])
         self.gvV.addItems(teachers["gvV"])

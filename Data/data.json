@@ -1,49 +1,37 @@
 [
     {
         "khoi": "6",
-        "lop": "6A1",
-        "gvcn": "Meo Meo",
+        "lop": "7A",
+        "gvcn": "Trúc Xinh",
         "gvbm": {
-            "khtn": null,
+            "toan": "Trúc Xinh",
+            "van": null,
             "anh": null,
-            "van": "Gau Gau",
-            "toan": "Meo Meo"
+            "khtn": null
         },
         "students": ""
     },
     {
-        "khoi": "7",
-        "lop": "7A1",
-        "gvcn": "Gau Gau",
+        "khoi": "8",
+        "lop": "8A",
+        "gvcn": null,
         "gvbm": {
-            "toan": "Meo Meo",
-            "van": "Gau Gau",
+            "khtn": null,
             "anh": null,
-            "khtn": "C M"
+            "van": null,
+            "toan": "Trúc Xinh"
         },
         "students": ""
     },
     {
         "khoi": "6",
-        "lop": "6A3",
-        "gvcn": "C M",
+        "lop": "6.1",
+        "gvcn": null,
         "gvbm": {
             "khtn": null,
             "anh": null,
-            "van": "Gau Gau",
-            "toan": "Meo Meo"
-        },
-        "students": ""
-    },
-    {
-        "khoi": "9",
-        "lop": "9P",
-        "gvcn": null,
-        "gvbm": {
-            "khtn": "C M",
-            "anh": null,
-            "van": "Gau Gau",
-            "toan": "Meo Meo"
+            "van": null,
+            "toan": null
         },
         "students": ""
     }

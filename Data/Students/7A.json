@@ -1,0 +1,679 @@
+[
+    {
+        "id": "MS01118",
+        "name": "Lý Anh Hiển",
+        "gender": "Nam",
+        "dob": "2012-02-02",
+        "parent_account": "phhs_MS01118",
+        "parent_password": "phhs_MS01118_1234",
+        "class": "7A",
+        "scores": {
+            "Toán": {
+                "semester_1": {
+                    "oral_scores": [
+                        1.0,
+                        2.0
+                    ],
+                    "quiz_15min": [
+                        3.0,
+                        4.0
+                    ],
+                    "test_1period": [
+                        5.0,
+                        5.0
+                    ],
+                    "midterm": 9.0,
+                    "final": 1.0,
+                    "average": 3.75
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "Văn": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "KHTN": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "Anh": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            }
+        },
+        "comment": {
+            "Toán": "Em học tốt, chăm chỉ và có thái độ học tập nghiêm túc. Cô/Thầy rất hài lòng với sự cố gắng của em 💯",
+            "Văn": "",
+            "KHTN": "",
+            "Anh": ""
+        }
+    },
+    {
+        "id": "MS36844",
+        "name": "Nguyễn Dương Thanh Trúc",
+        "gender": "Nữ",
+        "dob": "2011-03-03",
+        "parent_account": "phhs_MS36844",
+        "parent_password": "phhs_MS36844_1234",
+        "class": "7A",
+        "scores": {
+            "Toán": {
+                "semester_1": {
+                    "oral_scores": [
+                        2.0,
+                        4.0
+                    ],
+                    "quiz_15min": [
+                        9.2,
+                        1.2
+                    ],
+                    "test_1period": [
+                        1.2,
+                        4.2
+                    ],
+                    "midterm": 3.2,
+                    "final": 1.2,
+                    "average": 3.2749999999999995
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "Văn": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "KHTN": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "Anh": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            }
+        },
+        "comment": {
+            "Toán": "",
+            "Văn": "",
+            "KHTN": "",
+            "Anh": ""
+        }
+    },
+    {
+        "id": "MS83708",
+        "name": "Nguyễn Văn G",
+        "gender": "Nữ",
+        "dob": "2012-04-04",
+        "parent_account": "phhs_MS83708",
+        "parent_password": "phhs_MS83708_1234",
+        "class": "7A",
+        "scores": {
+            "Toán": {
+                "semester_1": {
+                    "oral_scores": [
+                        null,
+                        null
+                    ],
+                    "quiz_15min": [
+                        null,
+                        null
+                    ],
+                    "test_1period": [
+                        null,
+                        null
+                    ],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "Văn": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "KHTN": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "Anh": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            }
+        },
+        "comment": {
+            "Toán": "",
+            "Văn": "",
+            "KHTN": "",
+            "Anh": ""
+        }
+    },
+    {
+        "id": "MS25039",
+        "name": "Lý Suni",
+        "gender": "Nữ",
+        "dob": "2012-05-05",
+        "parent_account": "phhs_MS25039",
+        "parent_password": "phhs_MS25039_1234",
+        "class": "7A",
+        "scores": {
+            "Toán": {
+                "semester_1": {
+                    "oral_scores": [
+                        null,
+                        null
+                    ],
+                    "quiz_15min": [
+                        null,
+                        null
+                    ],
+                    "test_1period": [
+                        null,
+                        null
+                    ],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "Văn": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "KHTN": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "Anh": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            }
+        },
+        "comment": {
+            "Toán": "",
+            "Văn": "",
+            "KHTN": "",
+            "Anh": ""
+        }
+    },
+    {
+        "id": "MS05711",
+        "name": "Lý Money",
+        "gender": "Nữ",
+        "dob": "2012-06-06",
+        "parent_account": "phhs_MS05711",
+        "parent_password": "phhs_MS05711_1234",
+        "class": "7A",
+        "scores": {
+            "Toán": {
+                "semester_1": {
+                    "oral_scores": [
+                        null,
+                        null
+                    ],
+                    "quiz_15min": [
+                        null,
+                        null
+                    ],
+                    "test_1period": [
+                        null,
+                        null
+                    ],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "Văn": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "KHTN": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "Anh": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            }
+        },
+        "comment": {
+            "Toán": "",
+            "Văn": "",
+            "KHTN": "",
+            "Anh": ""
+        }
+    },
+    {
+        "id": "MS72389",
+        "name": "Lys sugonnn",
+        "gender": "Nam",
+        "dob": "1/1/2000",
+        "parent_account": "phhs_MS72389",
+        "parent_password": "phhs_MS72389_1234",
+        "class": "7A",
+        "scores": {
+            "Toán": {
+                "semester_1": {
+                    "oral_scores": [
+                        null,
+                        null
+                    ],
+                    "quiz_15min": [
+                        null,
+                        null
+                    ],
+                    "test_1period": [
+                        null,
+                        null
+                    ],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "Văn": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "KHTN": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "Anh": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            }
+        },
+        "comment": {
+            "Toán": "",
+            "Văn": "",
+            "KHTN": "",
+            "Anh": ""
+        }
+    },
+    {
+        "id": "MS33531",
+        "name": "Gay",
+        "gender": "Nam",
+        "dob": "1/1/2000",
+        "parent_account": "phhs_MS33531",
+        "parent_password": "phhs_MS33531_1234",
+        "class": "7A",
+        "scores": {
+            "Toán": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "Văn": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "KHTN": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            },
+            "Anh": {
+                "semester_1": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                },
+                "semester_2": {
+                    "oral_scores": [],
+                    "quiz_15min": [],
+                    "test_1period": [],
+                    "midterm": null,
+                    "final": null,
+                    "average": null
+                }
+            }
+        },
+        "comment": {
+            "Toán": "",
+            "Văn": "",
+            "KHTN": "",
+            "Anh": ""
+        }
+    }
+]

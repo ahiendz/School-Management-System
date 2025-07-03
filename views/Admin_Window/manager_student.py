@@ -1,7 +1,7 @@
 import json
 import os
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QTableView, QMessageBox, QFileDialog, QAbstractItemView
+    QApplication, QMainWindow, QMessageBox, QFileDialog, QAbstractItemView ,QHeaderView
 )
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from PyQt6 import uic
@@ -30,7 +30,7 @@ DEFAULT_SCORES = {
 class ManagerStudentsWindow(QMainWindow):
     def __init__(self, class_name):
         super().__init__()
-        uic.loadUi("Ui/Manager_Stundets.ui", self)
+        uic.loadUi("Assets/Ui/Manager_Stundets.ui", self)
 
 
         self.class_name = class_name
@@ -43,17 +43,17 @@ class ManagerStudentsWindow(QMainWindow):
         self.show()
 
     def setUpUi(self):
-        self.back_btn.clicked.connect(self.close)
-        self.import_btn.clicked.connect(self.import_student)
-        self.add_btn.clicked.connect(self.add_student)
-        self.remove_btn.clicked.connect(self.remove_student)
-        self.save_btn.clicked.connect(lambda: self.save_student(self.model))
-        self.export_btn.clicked.connect(self.export_student)
+        self.btnBack.clicked.connect(self.close)
+        self.btnImport.clicked.connect(self.import_student)
+        self.btnAdd.clicked.connect(self.add_student)
+        self.btnRemove.clicked.connect(self.remove_student)
+        self.btnSave.clicked.connect(lambda: self.save_student(self.model))
+        self.btnExport.clicked.connect(self.export_student)
 
-        # TableView setup
-        self.tableView.setEditTriggers(QAbstractItemView.EditTrigger.DoubleClicked)
+        # tableStudents setup
+        self.tableStudents.setEditTriggers(QAbstractItemView.EditTrigger.DoubleClicked)
         self.model = QStandardItemModel()
-        self.tableView.setModel(self.model)
+        self.tableStudents.setModel(self.model)
         self.model.setHorizontalHeaderLabels(
             ["ID", "Họ tên", "Giới tính", "Ngày sinh", "Tài khoản PH", "Mật khẩu PH"]
         )
@@ -74,6 +74,12 @@ class ManagerStudentsWindow(QMainWindow):
                 QStandardItem(student_obj.parent_password),
             ])
 
+        header = self.tableStudents.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeMode.Interactive)  # default
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)  # STT nhỏ gọn
+        for col in range(1, self.model.columnCount()):
+            header.setSectionResizeMode(col, QHeaderView.ResizeMode.Stretch)
+
     def add_student(self):
         dialog = dialog_add_student.Dialog_Them_Student()
         if dialog.exec():
@@ -82,7 +88,7 @@ class ManagerStudentsWindow(QMainWindow):
             self.load_data_to_ui()
 
     def remove_student(self):
-        selected_indexes = self.tableView.selectionModel().selectedRows()
+        selected_indexes = self.tableStudents.selectionModel().selectedRows()
         if not selected_indexes:
             QMessageBox.warning(self, "Chưa chọn", "Hãy chọn ít nhất 1 học sinh để xóa.")
             return

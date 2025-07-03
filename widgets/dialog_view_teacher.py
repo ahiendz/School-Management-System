@@ -2,18 +2,18 @@
 
 from PyQt6.QtWidgets import QDialog, QListWidgetItem
 from PyQt6 import uic
-from models.teacher import TeacherManager
+from Service.teacher_service import TeacherService
 
 class Dialog_View_Teacher(QDialog):
     def __init__(self, teacher_name):
         super().__init__()
-        uic.loadUi("Ui/Dialog_View_Teacher.ui", self)
+        uic.loadUi("Assets/Ui/Dialog_View_Teacher.ui", self)
 
         self.setWindowTitle("Thông tin giáo viên")
         
-        self.teacher_mgr = TeacherManager()
+        self.teacher_service = TeacherService()
 
-        self.teacher = self.teacher_mgr.view_teacher(teacher_name)
+        self.teacher = self.teacher_service.view_teacher(teacher_name)
         
         # Đổ dữ liệu vào các label readonly
         self.name_label.setText(self.teacher.name)

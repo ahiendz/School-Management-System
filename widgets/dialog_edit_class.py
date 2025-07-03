@@ -1,15 +1,15 @@
 from PyQt6.QtWidgets import QDialog
 from PyQt6 import uic
-from models.teacher import TeacherManager
+from Service.teacher_service import TeacherService
 
 class Dialog_Edit_Class(QDialog):
     def __init__(self, old_data=None):
         super().__init__()
-        uic.loadUi("Ui/Dialog_Edit_Class.ui", self)
+        uic.loadUi("Assets/Ui/Dialog_Edit_Class.ui", self)
 
         # Tải danh sách giáo viên phù hợp để lựa chọn
-        self.teacher_mgr = TeacherManager()
-        available_teachers = self.teacher_mgr.get_available_teachers()
+        self.teacher_service = TeacherService()
+        available_teachers = self.teacher_service.get_available_teachers()
 
         # Gán danh sách GV phù hợp theo môn
         self.gvT_ipt.addItems(available_teachers["gvT"])

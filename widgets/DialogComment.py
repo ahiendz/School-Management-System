@@ -5,7 +5,7 @@ from PyQt6 import uic
 class DialogComment(QDialog):
     def __init__(self, student_name, hocki, old_comment, scores):
         super().__init__()
-        uic.loadUi("Ui\Dialog_nhanxet_hocsinh.ui", self)
+        uic.loadUi(r"Assets\Ui\Dialog_nhanxet_hocsinh.ui", self)
 
         self.student_name = student_name
         self.hocki = hocki

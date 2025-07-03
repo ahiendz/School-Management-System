@@ -1,20 +1,20 @@
 from PyQt6.QtWidgets import QDialog
 from PyQt6 import uic
-from models import classroom as CL
+from Service.classroom_service import ClassroomService
 
 class Dialog_Edit_Giao_Vien(QDialog):
     def __init__(self, teacher_data):
         super().__init__()
         self.teacher_data = teacher_data
-        uic.loadUi(r"Ui\Dialog_Edit_Teacher.ui", self)
+        uic.loadUi(r"Assets\Ui\Dialog_Edit_Teacher.ui", self)
         
         self.setUpUi()
         
         self.show()
     
     def setUpUi(self):
-        self.classroom = CL.ClassroomManager()
-        classroom = self.classroom.get_available_classroom()
+        self.classroom_service = ClassroomService()
+        classroom = self.classroom_service.get_available_classrooms()
         
         self.gvcn_ipt.addItems(classroom)
         if self.teacher_data.gvcn:

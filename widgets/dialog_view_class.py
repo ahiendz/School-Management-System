@@ -2,17 +2,17 @@
 
 from PyQt6.QtWidgets import QDialog
 from PyQt6 import uic
-from models.classroom import ClassroomManager
+from Service.classroom_service import ClassroomService
 
 class Dialog_View_Class(QDialog):
     def __init__(self, class_name):
         super().__init__()
-        uic.loadUi("Ui\Dialog_View_Classroom.ui", self)
+        uic.loadUi(r"Assets\Ui\Dialog_View_Classroom.ui", self)
 
         self.setWindowTitle("Thông tin lớp học")
 
-        self.class_mgr = ClassroomManager()
-        classroom = self.class_mgr.view_class(class_name)
+        self.classroom_service = ClassroomService()
+        classroom = self.classroom_service.view_classroom(class_name)
 
         # Set thông tin cơ bản
         self.khoi_label.setText(classroom.khoi)

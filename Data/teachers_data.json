@@ -1,43 +1,25 @@
 [
     {
-        "name": "Meo Meo",
-        "gioi tinh": "Nam",
+        "name": "Trúc Xinh",
+        "gioi tinh": "Nữ",
         "age": "14",
         "mon day": "Toán",
-        "gvcn lop": "6A1",
+        "gvcn lop": "7A",
         "lop day": [
-            "6A1",
-            "7A1",
-            "6A3",
-            "9P"
+            "7A",
+            "8A"
         ],
-        "username": "GV27164",
+        "username": "GV47903",
         "password": "1234"
     },
     {
-        "name": "Gau Gau",
-        "gioi tinh": "Nam",
-        "age": "13",
-        "mon day": "Văn",
-        "gvcn lop": "7A1",
-        "lop day": [
-            "6A1",
-            "6A3"
-        ],
-        "username": "GV45839",
-        "password": "1234"
-    },
-    {
-        "name": "C M",
-        "gioi tinh": "Nam",
+        "name": "Lý Suni",
+        "gioi tinh": "Nữ",
         "age": "1",
-        "mon day": "KHTN",
-        "gvcn lop": "6A3",
-        "lop day": [
-            "7A1",
-            "9P"
-        ],
-        "username": "GV23143",
+        "mon day": "Văn",
+        "gvcn lop": null,
+        "lop day": [],
+        "username": "GV68738",
         "password": "1234"
     }
 ]

@@ -5,7 +5,7 @@ from models import student
 class Dialog_Them_Student(QDialog):
     def __init__(self):
         super().__init__()
-        uic.loadUi(r"Ui\Dialog_Them_Student.ui", self)
+        uic.loadUi(r"Assets\Ui\Dialog_Them_Student.ui", self)
         
         self.setUpUi()
         

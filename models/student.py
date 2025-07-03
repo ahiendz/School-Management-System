@@ -1,7 +1,7 @@
 from Data import data_io
 import random, pandas
 from openpyxl import Workbook
-from Data.data_utils import replace_nan_with_none
+from Utils.data_utils import replace_nan_with_none
 
 DEFAULT_SCORES = {
     "Toán": {
@@ -114,6 +114,12 @@ class Student:
         print(total_scores, num_scores)
         return total_scores / num_scores
     
+    def tinh_diem_trung_binh_nam_theo_mon(self, hk1, hk2):
+        if hk1 is not None and hk2 is not None:
+            return (hk1 + hk2*2) / 3
+        else:
+            return None
+        
 class StudentManager:
     def __init__(self, data_path, class_name):
         self.json_data_path = data_path
@@ -185,7 +191,8 @@ class StudentManager:
             dob=student_dict["dob"],
             parent_account=parent_account,
             parent_password=parent_password,
-            class_name=self.curr_lop
+            class_name=self.curr_lop,
+            comment=None
         )
 
         self.students.append(new_student)
@@ -349,3 +356,36 @@ class StudentManager:
             print(f"Comment for {student_name} in {mon_day} saved successfully.")
         else:
             print(f"Student {student_name} not found.")
+
+    def get_student_scores(self, student_name):
+        student = self.get_student_by_name(student_name)
+        if student:
+            hk1_scores = []
+            hk2_scores = []
+            canam_scores = {
+                "Toán" : {'semester_1': None, 'semester_2': None},
+                "Văn" : {'semester_1': None, 'semester_2': None},
+                "KHTN" : {'semester_1': None, 'semester_2': None},
+                "Anh" : {'semester_1': None, 'semester_2': None}
+            }
+            student_scores = student.scores
+            for hocki in ['semester_1', 'semester_2']:
+                for mon in ['Toán', 'Văn', 'KHTN', 'Anh']:
+                    if hocki == 'semester_1':
+                        sc = student_scores[mon][hocki]
+                        hk1_scores.append({
+                            mon : sc
+                        })
+                        canam_scores[mon][hocki] = sc['average'] if sc['average'] is not None else None
+
+                    elif hocki == 'semester_2':
+                        sc = student_scores[mon][hocki]
+                        hk2_scores.append({
+                            mon : sc
+                        })
+                        canam_scores[mon][hocki] = sc['average'] if sc['average'] is not None else None
+        else:
+            print(f"Student {student_name} not found.")
+            return None
+        
+        return hk1_scores, hk2_scores, canam_scores

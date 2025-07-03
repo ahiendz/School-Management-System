@@ -6,6 +6,7 @@ from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from PyQt6.QtCore import Qt
 from PyQt6 import uic
 from Service.student_service import StudentService
+from models import teacher
 from widgets.DialogComment import DialogComment
 from widgets.comment_delegate import CommentButtonDelegate  # nếu tách file
 import os
@@ -13,7 +14,7 @@ import os
 class TeacherWindow(QMainWindow):
     def __init__(self, teacher_dict):
         super().__init__()
-        uic.loadUi(r"Ui\GV.ui", self)
+        uic.loadUi(r"Assets\Ui\GV.ui", self)
 
         self.teacher_dict_data = teacher_dict
         self.lop_day = [str(item) for item in self.teacher_dict_data['lop day']]
@@ -27,16 +28,19 @@ class TeacherWindow(QMainWindow):
         self.show()
 
     def setUpUI(self):
-        while self.stackedWidget.count() > 0:
-            widget = self.stackedWidget.widget(0)
-            self.stackedWidget.removeWidget(widget)
+        teacher_name = self.teacher_dict_data['name']
+        self.welcomeLabel.setText(f"Xin chào, {teacher_name}!")
+
+        while self.stackedScoreWidget.count() > 0:
+            widget = self.stackedScoreWidget.widget(0)
+            self.stackedScoreWidget.removeWidget(widget)
             widget.deleteLater()
 
-        self.danhsachlopday.clear()
+        self.classListWidget.clear()
 
-        for ten_lop in self.lop_day:
+        for ten_lop in self.lop_day:    
             item = QListWidgetItem(ten_lop)
-            self.danhsachlopday.addItem(item)
+            self.classListWidget.addItem(item)
 
             trang = QWidget()
             layout = QVBoxLayout(trang)
@@ -54,24 +58,48 @@ class TeacherWindow(QMainWindow):
 
             self.bang_dict[ten_lop] = bang
             self.model_dict[ten_lop] = model
-            self.stackedWidget.addWidget(trang)
+            self.stackedScoreWidget.addWidget(trang)
 
-        self.danhsachlopday.currentRowChanged.connect(self.change_lop)
-        self.stackedWidget.setCurrentIndex(0)
+        self.classListWidget.currentRowChanged.connect(self.change_lop)
+        self.stackedScoreWidget.setCurrentIndex(0)
 
-        self.chonhocki.currentTextChanged.connect(
-            lambda _: self.show_scores(self.chonhocki.currentText())
+        self.semesterComboBox.currentTextChanged.connect(
+            lambda _: self.show_scores(self.semesterComboBox.currentText())
         )
 
         self.show_scores("Học kỳ 1")
 
-        self.save_btn.clicked.connect(self.save_data)
-        self.import_btn.clicked.connect(self.import_student_scores)
-        self.export_btn.clicked.connect(self.export_student_scores)
+        self.saveButton.clicked.connect(self.save_data)
+        self.importButton.clicked.connect(self.import_student_scores)
+        self.exportButton.clicked.connect(self.export_student_scores)
+        self.logoutButton.clicked.connect(self.logout)
+
+    def logout(self):
+        from views.login_side import login
+        reply = QMessageBox.question(self, "Đăng xuất", "Bạn có chắc chắn muốn đăng xuất không?", 
+                                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        if reply == QMessageBox.StandardButton.Yes:
+            login_window = login()
+            login_window.show()
+            self.close()
+
+    def show_message(self, text):
+        msg = QMessageBox(self)
+        msg.setIcon(QMessageBox.Icon.Information)
+        msg.setWindowTitle("Thông báo")
+        msg.setText(text)
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+        msg.exec()
 
     def change_lop(self, index):
-        self.stackedWidget.setCurrentIndex(index)
-        self.show_scores(self.chonhocki.currentText())
+        self.stackedScoreWidget.setCurrentIndex(index)
+        try:
+            if hasattr(self, 'semesterComboBox') and self.semesterComboBox is not None:
+                self.show_scores(self.semesterComboBox.currentText())
+            else:
+                self.show_scores("Học Kì 1")
+        except RuntimeError:
+            self.show_scores("Học Kì 1")
 
     def get_student_data(self, class_name, hk):
         if hk == "Học kỳ 1":
@@ -96,7 +124,7 @@ class TeacherWindow(QMainWindow):
         elif hk == "Học Kì 2":
             hk = "semester_2"
 
-        current_index = self.stackedWidget.currentIndex()
+        current_index = self.stackedScoreWidget.currentIndex()
         if current_index < 0 or current_index >= len(self.lop_day):
             return
 
@@ -149,13 +177,13 @@ class TeacherWindow(QMainWindow):
         model = self.model_dict[ten_lop]
         name = model.item(index.row(), 0).text()
 
-        student = self.studentservice.get_student_name_TEACHER_WINDOW(name)
+        student = self.studentservice.get_student_by_name_TEACHER_WINDOW(name)
         if student:
-            comment = student.comment[self.mon_day]
+            comment = student.comment.get(self.mon_day, "")
         else:
             comment = ""
 
-        hocki = self.chonhocki.currentText()
+        hocki = self.semesterComboBox.currentText() if hasattr(self, 'semesterComboBox') and self.semesterComboBox else "Học Kì 1"
         if hocki == "Học Kì 1":
             hk = "semester_1"
         elif hocki == "Học Kì 2":
@@ -168,12 +196,12 @@ class TeacherWindow(QMainWindow):
             self.studentservice.save_student_comment_TEACHER_WINDOW(student_name=name, mon_day=self.mon_day, comment=new_comment)
 
     def save_data(self):
-        current_page_index = self.stackedWidget.currentIndex()
+        current_page_index = self.stackedScoreWidget.currentIndex()
         if current_page_index < 0 or current_page_index >= len(self.lop_day):
             return
 
         current_lop = self.lop_day[current_page_index]
-        current_semester = self.chonhocki.currentText()
+        current_semester = self.semesterComboBox.currentText()
         # xuwr lý tên học kỳ
         if current_semester == "Học Kì 1":
             current_semester = "semester_1"
@@ -213,6 +241,7 @@ class TeacherWindow(QMainWindow):
         QMessageBox.information(self, "Lưu thành công", "Dữ liệu đã được lưu thành công.")
 
     def import_student_scores(self):
+        print("Import nha")
         """
         Import student scores from an Excel file.
         """
@@ -224,21 +253,22 @@ class TeacherWindow(QMainWindow):
         )
 
         if file_path:
-            current_page = self.stackedWidget.currentIndex()
+            current_page = self.stackedScoreWidget.currentIndex()
             current_class = self.lop_day[current_page]
             data_path = f"Data/Students/{current_class}.json"
             
-            semester = self.chonhocki.currentText()
+            semester = self.semesterComboBox.currentText()
             self.studentservice = StudentService(data_path, current_class)
             print("Importing scores from Excel file... with file path:", file_path, "and mon_day:", self.mon_day, "and semester:", semester)
             self.studentservice.import_scores_from_excel_TEACHER_WINDOW(file_path=file_path, mon_day=self.mon_day, semester=semester)
-            self.show_scores(self.chonhocki.currentText())
+            self.show_scores(self.semesterComboBox.currentText())
 
     def export_student_scores(self):
+        print("Exort nha")
         export_folder = os.path.abspath(f"Data/Export")
         os.makedirs(export_folder, exist_ok=True)
 
-        current_lop = self.stackedWidget.currentIndex()
+        current_lop = self.stackedScoreWidget.currentIndex()
         if current_lop < 0 or current_lop >= len(self.lop_day):
             QMessageBox.warning(self, "Lỗi", "Không có lớp học nào được chọn.")
             return
@@ -254,7 +284,7 @@ class TeacherWindow(QMainWindow):
         if not file_path:
             return
         
-        hk = self.chonhocki.currentText()
+        hk = self.semesterComboBox.currentText()
         if hk == "Học Kì 1":
             hk = "semester_1"
         elif hk == "Học Kì 2":
