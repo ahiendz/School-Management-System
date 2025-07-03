@@ -109,7 +109,9 @@ class TeacherManager:
             age = teacher_dict['age'],
             mon = teacher_dict['mon day'],
             gvcn = teacher_dict['gvcn lop'],
-            lop_day= None
+            lop_day= None,
+            
+            
         )
         self.teacher_data.append(new_teacher)
         self.teacher_data_dict.append(teacher_dict)

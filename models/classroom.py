@@ -108,17 +108,12 @@ class ClassroomManager:
                     teacher.lop_day.remove(lop)
 
             # ✅ Cập nhật lại teacher_data_dict sau khi chỉnh object
-            self.teacher_manager.teacher_data_dict = [
-                {
-                    "name": t.name,
-                    "gioi tinh": t.gioitinh,
-                    "age": t.age,
-                    "mon day": t.mon,
-                    "gvcn lop": t.gvcn,
-                    "lop day": t.lop_day
-                }
-                for t in self.teacher_manager.teacher_data
-            ]
+            # Tìm và cập nhật teacher_dict tương ứng để giữ nguyên username/password
+            for teacher in self.teacher_manager.teacher_data:
+                teacher_dict = self.teacher_manager.get_teacher_dict_by_name(teacher.name)
+                if teacher_dict:
+                    teacher_dict['gvcn lop'] = teacher.gvcn
+                    teacher_dict['lop day'] = teacher.lop_day
 
             # ✅ Ghi lại file giáo viên
             data_io.write_json_data(self.teacher_manager.teacher_data_dict, self.teacher_manager.data_path)
