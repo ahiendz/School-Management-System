@@ -66,8 +66,12 @@ class Admin_Them_Giao_Vien(QMainWindow):
                                             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
         if choice == QMessageBox.StandardButton.Yes:
-            self.teacherList.takeItem(teacher_item_id)
-            self.teacher_service.delete_teacher(teacher_name_selected)
+            try:
+                self.teacher_service.delete_teacher(teacher_name_selected)
+                self.teacherList.takeItem(teacher_item_id)
+            except Exception as e:
+                QMessageBox.warning(self, "Cảnh báo", str(e))
+                return
 
     def edit_Teacher(self):
         curr_id = self.teacherList.currentRow()
@@ -80,8 +84,12 @@ class Admin_Them_Giao_Vien(QMainWindow):
         if dialog_edit_teacher.exec():
             data_return = dialog_edit_teacher.return_input_fields()
             data = data_return[0]
-            self.teacherList.item(curr_id).setText(data['name'])
-            self.teacher_service.update_teacher_info(data_return[1], data)
+            try:
+                self.teacher_service.update_teacher_info(data_return[1], data)
+                self.teacherList.item(curr_id).setText(data['name'])
+            except Exception as e:
+                QMessageBox.warning(self, "Cảnh báo", str(e))
+                return
 
     def view_teacher(self):
         current_index = self.teacherList.currentRow()

@@ -21,7 +21,6 @@ class login(QMainWindow):
         self.setUpUi()
     
     def setUpUi(self):
-        self.config = config.Config()
 
         self.adminButton.clicked.connect(lambda: self.change_stacked_widget(0))
         self.teacherButton.clicked.connect(lambda: self.change_stacked_widget(1))
@@ -68,7 +67,8 @@ class login(QMainWindow):
             self.showmessenger("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu.")
             return
 
-        teachers = data_io.load_json_data(self.config.teacher_data_json_path)
+        teacher_data_path = r"Data\teachers_data.json"
+        teachers = data_io.load_json_data(teacher_data_path)
         for teacher in teachers:
             if teacher.get('username') == username and teacher.get('password') == password:
                 self.teacher_window = teacher_window.TeacherWindow(teacher)

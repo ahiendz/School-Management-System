@@ -21,10 +21,10 @@ class Dialog_View_Class(QDialog):
 
         # Set GVBM
         gvbm = classroom.teachers
-        self.gvT_label.setText(gvbm.get("toan") or "Không có")
-        self.gvV_label.setText(gvbm.get("van") or "Không có")
-        self.gvA_label.setText(gvbm.get("anh") or "Không có")
-        self.gvK_label.setText(gvbm.get("khtn") or "Không có")
+        self.gvT_label.setText(gvbm.get("Toán") or "Không có")
+        self.gvV_label.setText(gvbm.get("Văn") or "Không có")
+        self.gvA_label.setText(gvbm.get("Anh") or "Không có")
+        self.gvK_label.setText(gvbm.get("KHTN") or "Không có")
 
         # Disable chỉnh sửa
         for widget in [

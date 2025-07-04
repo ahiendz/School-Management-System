@@ -4,43 +4,57 @@
         "gioi tinh": "Nam",
         "age": "1",
         "mon day": "Văn",
-        "gvcn lop": null,
+        "gvcn lop": "6A1",
         "lop day": [
-            "6A",
-            "7.1",
-            "6y"
+            "6A1"
         ],
-        "username": "GV13519",
-        "password": "1234"
+        "username": "GV87214",
+        "password": "new"
     },
     {
         "name": "B",
-        "gioi tinh": "Nam",
-        "age": "3",
+        "gioi tinh": "Nữ",
+        "age": "1",
         "mon day": "Toán",
-        "gvcn lop": "7.1",
-        "lop day": [],
-        "username": "GV79934",
-        "password": "1234"
+        "gvcn lop": null,
+        "lop day": [
+            "8.1"
+        ],
+        "username": "GV74078",
+        "password": "new"
     },
     {
         "name": "C",
-        "gioi tinh": "Nam",
-        "age": "1",
-        "mon day": "Văn",
+        "gioi tinh": "Nữ",
+        "age": "3",
+        "mon day": "Anh",
         "gvcn lop": null,
-        "lop day": [],
-        "username": "GV39935",
+        "lop day": [
+            "8.1"
+        ],
+        "username": "GV57015",
         "password": "1234"
     },
     {
-        "name": "X",
+        "name": "D",
+        "gioi tinh": "Nam",
+        "age": "2",
+        "mon day": "KHTN",
+        "gvcn lop": "8.1",
+        "lop day": [],
+        "username": "GV44702",
+        "password": "1234"
+    },
+    {
+        "name": "D1",
         "gioi tinh": "Nam",
         "age": "1",
-        "mon day": "Toán",
-        "gvcn lop": "6D",
-        "lop day": [],
-        "username": "GV29185",
+        "mon day": "KHTN",
+        "gvcn lop": null,
+        "lop day": [
+            "8.1"
+        ],
+        "username": "GV24387",
         "password": "1234"
     }
 ]

@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import os
 
-def save_parent_chart_image(avg_scores: dict, output_path: str = "Assets/Charts/parent_chart.png"):
+def save_parent_chart_image(avg_scores, output_path = "Assets/Charts/parent_chart.png"):
     subjects = list(avg_scores.keys())
     scores_sem1 = [avg_scores[sub]["semester_1"] for sub in subjects]
     scores_sem2 = [avg_scores[sub]["semester_2"] for sub in subjects]

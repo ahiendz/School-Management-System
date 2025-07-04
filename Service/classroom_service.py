@@ -1,16 +1,25 @@
 from models.classroom import ClassroomManager
 from models.teacher import TeacherManager
+from Utils.validation_utils import ValidationUtils
 
 class ClassroomService:
     def __init__(self):
         self.classroom_manager = ClassroomManager()
         self.teacher_manager = TeacherManager()
+        self.validation_utils = ValidationUtils()
 
     def create_new_classroom(self, class_data):
         # Điều phối tạo lớp mới
         self.classroom_manager.add_classroom(class_data)
 
     def delete_classroom(self, class_name):
+        # Kiểm tra ràng buộc trước khi xóa
+        classroom_data = self.classroom_manager.get_classroom_dicty_by_class(class_name)
+        if classroom_data:
+            error_message = self.validation_utils.get_classroom_delete_message(classroom_data)
+            if error_message:
+                raise Exception(error_message)
+        
         # Gọi classroom_manager lấy chi tiết lớp
         # Gọi teacher_manager unassign lớp khỏi giáo viên
         # Gọi classroom_manager xóa lớp
@@ -19,6 +28,12 @@ class ClassroomService:
     def update_classroom_info(self, class_name, new_data):
         # Fix: Cần cập nhật cả teacher assignments khi thay đổi lớp
         old_data = self.classroom_manager.get_classroom_dicty_by_class(class_name)
+        
+        # Kiểm tra ràng buộc trước khi cập nhật
+        if old_data:
+            error_message = self.validation_utils.get_classroom_validation_message(old_data, new_data)
+            if error_message:
+                raise Exception(error_message)
         
         # Xóa lớp cũ khỏi các giáo viên liên quan
         if old_data:

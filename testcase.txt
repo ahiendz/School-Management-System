@@ -1,33 +1,0 @@
-📚 A. TEST CASE - CLASSROOM (LỚP HỌC)
-Mã TC	Hành động	Mô tả Test	Kết quả Mong Muốn	Ghi chú
-CL01	Add	Tạo lớp 6A1 có GVCN là giáo viên X đã làm GVCN lớp 6B	❌ Báo lỗi: Giáo viên đã làm GVCN lớp khác	GVCN chỉ được 1 lớp duy nhất
-CL02	Add	Gán giáo viên X làm GVCN + dạy Toán lớp 6C, khi X đang dạy 4 lớp khác	❌ Báo lỗi: Giáo viên vượt quá số lớp được dạy (4 lớp)	Kiểm tra giới hạn lớp dạy
-CL03	Add	Gán giáo viên X làm GVCN lớp 6D và X chưa dạy lớp này	✅ Gán GVCN và auto thêm X vào giáo viên dạy lớp 6D	Logic ưu tiên dạy chính lớp chủ nhiệm
-CL04	Edit	Đổi GVCN lớp 6E từ giáo viên A sang B, B chưa làm GVCN ở lớp khác	✅ Cập nhật GVCN thành công	
-CL05	Edit	Sửa giáo viên dạy môn Văn từ A sang B, nhưng B đã dạy đủ 4 lớp	❌ Báo lỗi không thể gán giáo viên	
-CL06	Remove	Xóa lớp 6F, lớp có giáo viên X dạy 2 môn	✅ Tự động xóa lớp 6F khỏi danh sách lớp của X	Cập nhật dữ liệu ngược về giáo viên
-
-👨‍🏫 B. TEST CASE - TEACHER (GIÁO VIÊN)
-Mã TC	Hành động	Mô tả Test	Kết quả Mong Muốn	Ghi chú
-TE01	Add	Thêm giáo viên A môn Văn, làm GVCN lớp 7A (đã có sẵn GVCN khác)	❌ Báo lỗi: lớp đã có GVCN	
-TE02	Add	Thêm giáo viên B môn Toán, GVCN lớp trống, chưa có lớp dạy	✅ Thêm thành công, gán GVCN đúng lớp	
-TE03	Edit	Sửa giáo viên A, thêm lớp dạy thứ 5	❌ Báo lỗi: vượt quá 4 lớp	
-TE04	Edit	Bỏ GVCN lớp khỏi giáo viên A	✅ Xóa thông tin lớp khỏi danh sách GVCN	
-TE05	Remove	Xóa giáo viên đang là GVCN lớp 6A	❌ Cảnh báo: không thể xóa vì đang là GVCN lớp	Có thể yêu cầu gỡ GVCN trước
-TE06	Remove	Xóa giáo viên không dạy lớp nào	✅ Xóa thành công	
-
-✅ Các mục cần kiểm tra/fix khi test:
-👇 Trong TeacherService và ClassroomService:
- Kiểm tra max_class_limit = 4 khi gán giáo viên
-
- Kiểm tra 1 giáo viên chỉ làm GVCN 1 lớp duy nhất
-
- Khi gán GVCN, tự thêm vào môn dạy lớp đó nếu chưa có
-
- Khi xóa lớp, cập nhật danh sách lớp của tất cả giáo viên
-
- Khi xóa giáo viên, kiểm tra có đang làm GVCN không
-
- Trường hợp sửa lớp: cập nhật đúng danh sách lớp dạy của GV cũ và mới
-
- Popup cảnh báo rõ ràng khi lỗi (ví dụ: “Giáo viên đã là GVCN lớp 7A”)

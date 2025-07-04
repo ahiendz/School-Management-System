@@ -1,0 +1,163 @@
+[
+    {
+        "id": "MS33710",
+        "name": "Nam",
+        "gender": "Nam",
+        "dob": "1/1/2000",
+        "parent_account": "phhs_MS33710",
+        "parent_password": "ph1",
+        "class": "8.1",
+        "scores": {
+            "Toán": {
+                "semester_1": {
+                    "oral_scores": [
+                        0.0,
+                        3.0
+                    ],
+                    "quiz_15min": [
+                        4.0,
+                        1.0
+                    ],
+                    "test_1period": [
+                        1.0,
+                        10.0
+                    ],
+                    "midterm": 2.0,
+                    "final": 3.0,
+                    "average": 3.0
+                },
+                "semester_2": {
+                    "oral_scores": [
+                        0.0,
+                        0.0
+                    ],
+                    "quiz_15min": [
+                        0.0,
+                        0.0
+                    ],
+                    "test_1period": [
+                        1.0,
+                        10.0
+                    ],
+                    "midterm": 2.0,
+                    "final": 3.0,
+                    "average": 2.0
+                }
+            },
+            "Văn": {
+                "semester_1": {
+                    "oral_scores": [
+                        0.1,
+                        4.0
+                    ],
+                    "quiz_15min": [
+                        2.3,
+                        1.1
+                    ],
+                    "test_1period": [
+                        9.7,
+                        0.9
+                    ],
+                    "midterm": 10.0,
+                    "final": 10.0,
+                    "average": 4.7625
+                },
+                "semester_2": {
+                    "oral_scores": [
+                        4.2,
+                        1.2
+                    ],
+                    "quiz_15min": [
+                        4.2,
+                        1.1
+                    ],
+                    "test_1period": [
+                        1.1,
+                        9.0
+                    ],
+                    "midterm": 10.0,
+                    "final": 10.0,
+                    "average": 5.1
+                }
+            },
+            "KHTN": {
+                "semester_1": {
+                    "oral_scores": [
+                        1.2,
+                        2.1
+                    ],
+                    "quiz_15min": [
+                        2.3,
+                        1.2
+                    ],
+                    "test_1period": [
+                        6.7,
+                        9.6
+                    ],
+                    "midterm": 3.5,
+                    "final": 7.5,
+                    "average": 4.2625
+                },
+                "semester_2": {
+                    "oral_scores": [
+                        4.2,
+                        1.2
+                    ],
+                    "quiz_15min": [
+                        5.3,
+                        9.0
+                    ],
+                    "test_1period": [
+                        9.0,
+                        9.0
+                    ],
+                    "midterm": 9.0,
+                    "final": 9.0,
+                    "average": 6.9625
+                }
+            },
+            "Anh": {
+                "semester_1": {
+                    "oral_scores": [
+                        1.0,
+                        0.1
+                    ],
+                    "quiz_15min": [
+                        1.2,
+                        1.3
+                    ],
+                    "test_1period": [
+                        1.2,
+                        5.6
+                    ],
+                    "midterm": 3.5,
+                    "final": 6.3,
+                    "average": 2.525
+                },
+                "semester_2": {
+                    "oral_scores": [
+                        0.2,
+                        0.1
+                    ],
+                    "quiz_15min": [
+                        1.2,
+                        4.2
+                    ],
+                    "test_1period": [
+                        1.1,
+                        9.9
+                    ],
+                    "midterm": 9.9,
+                    "final": 9.9,
+                    "average": 4.5625
+                }
+            }
+        },
+        "comment": {
+            "Toán": "Em có tiềm năng, nhưng cần tập trung và nỗ lực hơn nữa để phát huy hết khả năng của mình. Cố lên nha 💪",
+            "Văn": "Em có tiềm năng, nhưng cần tập trung và nỗ lực hơn nữa để phát huy hết khả năng của mình. Cố lên nha 💪",
+            "KHTN": "Con cưng",
+            "Anh": "Ngu"
+        }
+    }
+]

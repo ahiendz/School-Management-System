@@ -1,51 +1,29 @@
 [
     {
         "khoi": "8",
-        "lop": "8A",
-        "gvcn": null,
+        "lop": "8.1",
+        "gvcn": "D",
         "gvbm": {
-            "khtn": null,
-            "anh": null,
+            "toan": "B",
             "van": null,
-            "toan": null
+            "anh": "C",
+            "khtn": "D1"
         }
     },
     {
         "khoi": "6",
-        "lop": "6A",
-        "gvcn": null,
+        "lop": "6A1",
+        "gvcn": "A",
         "gvbm": {
-            "khtn": null,
-            "anh": null,
-            "van": null,
-            "toan": null
-        }
-    },
-    {
-        "khoi": "7",
-        "lop": "7.1",
-        "gvcn": "B",
-        "gvbm": {
-            "khtn": null,
-            "anh": null,
+            "toan": null,
             "van": "A",
-            "toan": null
-        }
-    },
-    {
-        "khoi": "6",
-        "lop": "6y",
-        "gvcn": null,
-        "gvbm": {
-            "khtn": null,
             "anh": null,
-            "van": "A",
-            "toan": null
+            "khtn": null
         }
     },
     {
         "khoi": "6",
-        "lop": "6D",
+        "lop": "6A2",
         "gvcn": null,
         "gvbm": {
             "khtn": null,

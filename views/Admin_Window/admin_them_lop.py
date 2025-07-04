@@ -110,8 +110,12 @@ class Admin_Them_Lop(QMainWindow):
                                             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
         if choice == QMessageBox.StandardButton.Yes:
-            listWidget.takeItem(classroom_id)
-            self.classroom_service.delete_classroom(classroom_sel)
+            try:
+                self.classroom_service.delete_classroom(classroom_sel)
+                listWidget.takeItem(classroom_id)
+            except Exception as e:
+                QMessageBox.warning(self, "Cảnh báo", str(e))
+                return
 
     def edit_class(self):
         current_index = self.stackedWidget.currentIndex()
@@ -125,9 +129,12 @@ class Admin_Them_Lop(QMainWindow):
             dialog = Dialog_Edit_Class(old_data)
             if dialog.exec():
                 new_data = dialog.return_input_fields()
-                self.classroom_service.update_classroom_info(selected_lop, new_data)
-
-                listWidget.item(row).setText(new_data['lop'])
+                try:
+                    self.classroom_service.update_classroom_info(selected_lop, new_data)
+                    listWidget.item(row).setText(new_data['lop'])
+                except Exception as e:
+                    QMessageBox.warning(self, "Cảnh báo", str(e))
+                    return
 
     def view_class(self):
         current_index = self.stackedWidget.currentIndex()
