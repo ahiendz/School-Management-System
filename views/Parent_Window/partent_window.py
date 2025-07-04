@@ -4,6 +4,7 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtGui import QPixmap
 from PyQt6 import uic
 from Service.student_service import StudentService
+from widgets import change_password
 import sys
 
 class ParentWindow(QMainWindow):
@@ -14,11 +15,11 @@ class ParentWindow(QMainWindow):
         self.data_path = data_path
 
         self.student_service = StudentService(class_name=class_name, data_path=data_path)
-        student = self.student_service.get_student_by_name_TEACHER_WINDOW(student_name)
+        self.student = self.student_service.get_student_by_name_TEACHER_WINDOW(student_name)
 
         self.name = student_name
-        self.gender = student.gender
-        self.comment = student.comment
+        self.gender = self.student.gender
+        self.comment = self.student.comment
         self.class_name = class_name
         
 
@@ -57,6 +58,7 @@ class ParentWindow(QMainWindow):
         self.load_scores_to_ui()
 
         self.btn_logout.clicked.connect(self.logout)
+        self.btn_change_password.clicked.connect(self.open_change_password)
 
     def load_scores_to_ui(self):
         student_service = StudentService(class_name=self.class_name, data_path=self.data_path)
@@ -154,3 +156,12 @@ class ParentWindow(QMainWindow):
             self.close()
 
         # else: do nothing, stay in the window
+
+    def open_change_password(self):
+        dialog = change_password.ChangePasswordDialog(
+            # account_service=self.account_service,
+            username=self.student.parent_account,
+            role="parent",
+            class_name = self.class_name
+        )
+        dialog.exec()

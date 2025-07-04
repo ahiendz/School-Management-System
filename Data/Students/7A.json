@@ -5,7 +5,7 @@
         "gender": "Nam",
         "dob": "2012-02-02",
         "parent_account": "phhs_MS01118",
-        "parent_password": "phhs_MS01118_1234",
+        "parent_password": "1",
         "class": "7A",
         "scores": {
             "Toán": {
@@ -32,7 +32,7 @@
                     "test_1period": [],
                     "midterm": null,
                     "final": null,
-                    "average": null
+                    "average": 2
                 }
             },
             "Văn": {
@@ -42,7 +42,7 @@
                     "test_1period": [],
                     "midterm": null,
                     "final": null,
-                    "average": null
+                    "average": 1.4
                 },
                 "semester_2": {
                     "oral_scores": [],
@@ -50,7 +50,7 @@
                     "test_1period": [],
                     "midterm": null,
                     "final": null,
-                    "average": null
+                    "average": 6.3
                 }
             },
             "KHTN": {
@@ -60,7 +60,7 @@
                     "test_1period": [],
                     "midterm": null,
                     "final": null,
-                    "average": null
+                    "average": 1.2
                 },
                 "semester_2": {
                     "oral_scores": [],
@@ -68,7 +68,7 @@
                     "test_1period": [],
                     "midterm": null,
                     "final": null,
-                    "average": null
+                    "average": 1.2
                 }
             },
             "Anh": {
@@ -78,7 +78,7 @@
                     "test_1period": [],
                     "midterm": null,
                     "final": null,
-                    "average": null
+                    "average": 1
                 },
                 "semester_2": {
                     "oral_scores": [],
@@ -86,7 +86,7 @@
                     "test_1period": [],
                     "midterm": null,
                     "final": null,
-                    "average": null
+                    "average": 9
                 }
             }
         },

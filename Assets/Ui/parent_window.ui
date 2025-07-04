@@ -386,13 +386,6 @@ QPushButton:hover {
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="btn_export">
-         <property name="text">
-          <string>Export to PDF</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>

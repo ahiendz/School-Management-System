@@ -9,6 +9,7 @@ from Service.student_service import StudentService
 from models import teacher
 from widgets.DialogComment import DialogComment
 from widgets.comment_delegate import CommentButtonDelegate  # nếu tách file
+from widgets import change_password
 import os
 
 class TeacherWindow(QMainWindow):
@@ -74,6 +75,10 @@ class TeacherWindow(QMainWindow):
         self.exportButton.clicked.connect(self.export_student_scores)
         self.logoutButton.clicked.connect(self.logout)
 
+        # Add: Connect password change button if present
+        if hasattr(self, 'changePasswordButton'):
+            self.changePasswordButton.clicked.connect(self.open_change_password)
+
     def logout(self):
         from views.login_side import login
         reply = QMessageBox.question(self, "Đăng xuất", "Bạn có chắc chắn muốn đăng xuất không?", 
@@ -82,6 +87,29 @@ class TeacherWindow(QMainWindow):
             login_window = login()
             login_window.show()
             self.close()
+
+    def handle_change_password(self):
+        old_pass = self.oldPasswordLineEdit.text()
+        new_pass = self.newPasswordLineEdit.text()
+        confirm_pass = self.confirmPasswordLineEdit.text()
+
+        if new_pass != confirm_pass:
+            QMessageBox.warning(self, "Lỗi", "Mật khẩu mới không khớp.")
+            return
+
+        success, message = self.account_service.change_password(
+            username=self.username,
+            old_password=old_pass,
+            new_password=new_pass,
+            role=self.role
+        )
+
+        if success:
+            QMessageBox.information(self, "Thành công", message)
+            self.accept()
+        else:
+            QMessageBox.warning(self, "Lỗi", message)
+
 
     def show_message(self, text):
         msg = QMessageBox(self)
@@ -290,3 +318,10 @@ class TeacherWindow(QMainWindow):
         elif hk == "Học Kì 2":
             hk = "semester_2"
         self.studentservice.export_scores_to_excel_TEACHER_WINDOW(file_path=file_path, mon_day=self.mon_day, semester=hk)
+
+    def open_change_password(self):
+        dialog = change_password.ChangePasswordDialog(
+            username=self.teacher_dict_data.get('username', ''),
+            role="teacher"
+        )
+        dialog.exec()
