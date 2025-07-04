@@ -1,25 +1,46 @@
 [
     {
-        "name": "Trúc Xinh",
-        "gioi tinh": "Nữ",
-        "age": "14",
-        "mon day": "Toán",
-        "gvcn lop": "7A",
+        "name": "A",
+        "gioi tinh": "Nam",
+        "age": "1",
+        "mon day": "Văn",
+        "gvcn lop": null,
         "lop day": [
-            "7A",
-            "8A"
+            "6A",
+            "7.1",
+            "6y"
         ],
-        "username": "GV47903",
-        "password": "1"
+        "username": "GV13519",
+        "password": "1234"
     },
     {
-        "name": "Lý Suni",
-        "gioi tinh": "Nữ",
+        "name": "B",
+        "gioi tinh": "Nam",
+        "age": "3",
+        "mon day": "Toán",
+        "gvcn lop": "7.1",
+        "lop day": [],
+        "username": "GV79934",
+        "password": "1234"
+    },
+    {
+        "name": "C",
+        "gioi tinh": "Nam",
         "age": "1",
         "mon day": "Văn",
         "gvcn lop": null,
         "lop day": [],
-        "username": "GV68738",
+        "username": "GV39935",
+        "password": "1234"
+    },
+    {
+        "name": "X",
+        "gioi tinh": "Nam",
+        "age": "1",
+        "mon day": "Toán",
+        "gvcn lop": "6D",
+        "lop day": [],
+        "username": "GV29185",
         "password": "1234"
     }
 ]
